@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:time_planner_mobile/infrastructure/authentication/model/auth_status.dart';
 import 'package:time_planner_mobile/presentation/authentication/bloc/authentication_bloc.dart';
 import 'package:time_planner_mobile/presentation/authentication/sign_in_screen.dart';
 import 'package:time_planner_mobile/presentation/signup/sign_up_screen.dart';
@@ -27,7 +28,7 @@ class HomeScreen extends StatelessWidget {
                               context.push(SignInScreen.path);
                             }
                           : null,
-                      child: const Text("SignIn"),
+                      child: const Text("Sign In"),
                     ),
                     const SizedBox(
                       height: 20,
@@ -38,7 +39,20 @@ class HomeScreen extends StatelessWidget {
                               context.push(SignUpScreen.path);
                             }
                           : null,
-                      child: const Text("SignUp"),
+                      child: const Text("Sign Up"),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    ElevatedButton(
+                      onPressed: state.authStatus == AuthStatus.authenticated
+                          ? () {
+                              context
+                                  .read<AuthenticationBloc>()
+                                  .add(SignOutButtonPressed());
+                            }
+                          : null,
+                      child: const Text("Sign Out"),
                     ),
                   ],
                 );

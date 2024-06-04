@@ -4,6 +4,7 @@ import 'package:time_planner_mobile/infrastructure/authentication/model/sign_up_
 abstract class AuthenticationRepositoryAbstraction {
   Future<String?> getAccessToken();
   Future<void> saveAccessToken(String token);
+  Future<void> removeAccessToken();
   Future<String?> signIn(SignInDto dto);
   Future<bool> signUp(SignUpDto dto);
 }

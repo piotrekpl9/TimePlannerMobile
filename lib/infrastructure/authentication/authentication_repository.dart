@@ -23,6 +23,11 @@ class AuthenticationRepository implements AuthenticationRepositoryAbstraction {
   }
 
   @override
+  Future<void> removeAccessToken() async {
+    await secureStorageDao.delete("jwtToken");
+  }
+
+  @override
   Future<String?> signIn(SignInDto dto) async {
     try {
       var result = await httpClient.dio.post(
