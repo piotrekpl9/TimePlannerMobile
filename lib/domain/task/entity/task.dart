@@ -23,4 +23,18 @@ class TaskDto {
     required this.plannedEndHour,
     required this.createdAt,
   });
+
+  factory TaskDto.fromJson(Map<String, dynamic> json) {
+    return TaskDto(
+      taskUUID: json['taskId'],
+      name: json['name'],
+      notes: json['notes'],
+      status: json['status'],
+      creator: User.fromJson(json['creator']),
+      groupId: json['groupId'],
+      plannedStartHour: DateTime.parse(json['plannedStartHour']),
+      plannedEndHour: DateTime.parse(json['plannedEndHour']),
+      createdAt: DateTime.parse(json['createdAt']),
+    );
+  }
 }

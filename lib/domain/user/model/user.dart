@@ -10,4 +10,13 @@ class User {
     required this.email,
     required this.createdAt,
   });
+
+  factory User.fromJson(Map<String, dynamic> json) {
+    return User(
+      name: json['name'],
+      surname: json['surname'],
+      email: json['email'],
+      createdAt: DateTime.parse(json['createdAt']),
+    );
+  }
 }

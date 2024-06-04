@@ -10,7 +10,13 @@ class HttpClient {
 
   final Dio dio;
   HttpClient(this.secureStorageDao)
-      : dio = Dio(BaseOptions(baseUrl: AppConsts.apiURL));
+      : dio = Dio(BaseOptions(baseUrl: AppConsts.apiURL))
+          ..options = BaseOptions(
+            headers: {
+              Headers.contentTypeHeader:
+                  'application/json', // Set the MediaType here
+            },
+          );
 
   //Add "addinterceptos"
 }
