@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:time_planner_mobile/presentation/authentication/bloc/authentication_bloc.dart';
+import 'package:time_planner_mobile/presentation/calendar/callendar_screen.dart';
 
 class AuthenticatedView extends StatelessWidget {
   const AuthenticatedView({super.key});
@@ -14,9 +15,9 @@ class AuthenticatedView extends StatelessWidget {
       children: [
         ElevatedButton(
           onPressed: () {
-            context.push();
+            context.push(CalendarScreen.path);
           },
-          child: const Text("Sign Out"),
+          child: const Text("Calendar Screen"),
         ),
         ElevatedButton(
           onPressed: () {

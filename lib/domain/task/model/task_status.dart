@@ -22,4 +22,21 @@ enum TaskStatus {
         return 'Unknown';
     }
   }
+
+  static TaskStatus fromString(String status) {
+    switch (status.toLowerCase()) {
+      case "notstarted":
+        return notStarted;
+      case "inprogress":
+        return inProgress;
+      case "completed":
+        return completed;
+      case "onhold":
+        return onHold;
+      case "cancelled":
+        return cancelled;
+      default:
+        return notStarted;
+    }
+  }
 }

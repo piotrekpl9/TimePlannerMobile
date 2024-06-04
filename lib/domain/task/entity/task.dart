@@ -29,7 +29,7 @@ class TaskDto {
       taskUUID: json['taskId'],
       name: json['name'],
       notes: json['notes'],
-      status: json['status'],
+      status: TaskStatus.fromString(json['status']),
       creator: User.fromJson(json['creator']),
       groupId: json['groupId'],
       plannedStartHour: DateTime.parse(json['plannedStartHour']),
