@@ -5,8 +5,7 @@ enum TaskStatus {
   onHold,
   cancelled;
 
-  @override
-  String toString() {
+  String toPresentativeString() {
     switch (this) {
       case TaskStatus.notStarted:
         return 'Not Started';
@@ -16,6 +15,24 @@ enum TaskStatus {
         return 'Completed';
       case TaskStatus.onHold:
         return 'On Hold';
+      case TaskStatus.cancelled:
+        return 'Cancelled';
+      default:
+        return 'Unknown';
+    }
+  }
+
+  @override
+  String toString() {
+    switch (this) {
+      case TaskStatus.notStarted:
+        return 'NotStarted';
+      case TaskStatus.inProgress:
+        return 'InProgress';
+      case TaskStatus.completed:
+        return 'Completed';
+      case TaskStatus.onHold:
+        return 'OnHold';
       case TaskStatus.cancelled:
         return 'Cancelled';
       default:

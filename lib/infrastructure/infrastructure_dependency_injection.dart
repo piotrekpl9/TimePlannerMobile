@@ -8,9 +8,9 @@ import 'package:time_planner_mobile/infrastructure/authentication/abstraction/se
 import 'package:time_planner_mobile/infrastructure/authentication/authentication_repository.dart';
 import 'package:time_planner_mobile/infrastructure/authentication/authentication_service.dart';
 import 'package:time_planner_mobile/infrastructure/authentication/secure_storage_dao.dart';
-import 'package:time_planner_mobile/infrastructure/common/http_client.dart';
-import 'package:time_planner_mobile/infrastructure/common/status_interceptor.dart';
-import 'package:time_planner_mobile/infrastructure/common/token_interceptor.dart';
+import 'package:time_planner_mobile/infrastructure/common/http_client/http_client.dart';
+import 'package:time_planner_mobile/infrastructure/common/http_client/status_interceptor.dart';
+import 'package:time_planner_mobile/infrastructure/common/http_client/token_interceptor.dart';
 import 'package:time_planner_mobile/infrastructure/group_repository.dart';
 import 'package:time_planner_mobile/infrastructure/task_repository.dart';
 import 'package:time_planner_mobile/infrastructure/user_repository.dart';

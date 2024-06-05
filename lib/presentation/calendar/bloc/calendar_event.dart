@@ -8,3 +8,17 @@ class CalendarEvent extends Equatable {
 }
 
 class UserEnteredScreenEvent extends CalendarEvent {}
+
+class AddTaskButtonTappedEvent extends CalendarEvent {
+  final CreateTaskDto createTaskDto;
+
+  const AddTaskButtonTappedEvent({required this.createTaskDto});
+}
+
+class UpdateTaskButtonTappedEvent extends CalendarEvent {
+  final String taskUUID;
+  final UpdateTaskDto updateTaskDto;
+
+  const UpdateTaskButtonTappedEvent(
+      {required this.taskUUID, required this.updateTaskDto});
+}

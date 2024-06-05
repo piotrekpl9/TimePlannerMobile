@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:time_planner_mobile/app_consts.dart';
 
-import '../authentication/abstraction/secure_storage_dao_abstraction.dart';
+import '../../authentication/abstraction/secure_storage_dao_abstraction.dart';
 
 class HttpClient {
   final SecureStorageDaoAbstraction secureStorageDao;

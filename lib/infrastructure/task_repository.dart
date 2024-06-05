@@ -2,7 +2,7 @@ import 'package:time_planner_mobile/domain/task/entity/task.dart';
 import 'package:time_planner_mobile/domain/task/model/create_task_dto.dart';
 import 'package:time_planner_mobile/domain/task/model/update_task_dto.dart';
 import 'package:time_planner_mobile/domain/task/task_repository_abstraction.dart';
-import 'package:time_planner_mobile/infrastructure/common/http_client.dart';
+import 'package:time_planner_mobile/infrastructure/common/http_client/http_client.dart';
 
 class TaskRepository implements TaskRepositoryAbstraction {
   final HttpClient httpClient;

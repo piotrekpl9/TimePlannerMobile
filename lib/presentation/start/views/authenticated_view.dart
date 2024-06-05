@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:time_planner_mobile/presentation/authentication/bloc/authentication_bloc.dart';
-import 'package:time_planner_mobile/presentation/calendar/callendar_screen.dart';
+import 'package:time_planner_mobile/presentation/calendar/calendar_screen.dart';
 
 class AuthenticatedView extends StatelessWidget {
   const AuthenticatedView({super.key});
@@ -18,6 +18,9 @@ class AuthenticatedView extends StatelessWidget {
             context.push(CalendarScreen.path);
           },
           child: const Text("Calendar Screen"),
+        ),
+        const SizedBox(
+          height: 20,
         ),
         ElevatedButton(
           onPressed: () {

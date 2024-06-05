@@ -1,6 +1,6 @@
 import 'package:time_planner_mobile/domain/user/model/update_password_dto.dart';
 import 'package:time_planner_mobile/domain/user/user_repository_abstraction.dart';
-import 'package:time_planner_mobile/infrastructure/common/http_client.dart';
+import 'package:time_planner_mobile/infrastructure/common/http_client/http_client.dart';
 
 class UserRepository implements UserRepositoryAbstraction {
   final HttpClient httpClient;

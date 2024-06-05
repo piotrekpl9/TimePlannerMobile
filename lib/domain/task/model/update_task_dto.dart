@@ -19,9 +19,9 @@ class UpdateTaskDto {
     return {
       'name': name,
       'notes': notes,
-      'plannedStartHour': plannedStartHour?.toIso8601String(),
-      'plannedEndHour': plannedEndHour?.toIso8601String(),
-      'status': status?.toString(),
+      'plannedStartHour': plannedStartHour?.toUtc().toIso8601String(),
+      'plannedEndHour': plannedEndHour?.toUtc().toIso8601String(),
+      'status': status?.toString().trim(),
     };
   }
 }

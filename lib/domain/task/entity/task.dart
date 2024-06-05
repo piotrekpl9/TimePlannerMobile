@@ -32,9 +32,27 @@ class TaskDto {
       status: TaskStatus.fromString(json['status']),
       creator: User.fromJson(json['creator']),
       groupId: json['groupId'],
-      plannedStartHour: DateTime.parse(json['plannedStartHour']),
-      plannedEndHour: DateTime.parse(json['plannedEndHour']),
-      createdAt: DateTime.parse(json['createdAt']),
+      plannedStartHour: DateTime.parse(json['plannedStartHour']).toLocal(),
+      plannedEndHour: DateTime.parse(json['plannedEndHour']).toLocal(),
+      createdAt: DateTime.parse(json['createdAt']).toLocal(),
     );
+  }
+
+  TaskDto copyWith({
+    String? name,
+    String? notes,
+    DateTime? plannedStartHour,
+    DateTime? plannedEndHour,
+    TaskStatus? status,
+  }) {
+    return TaskDto(
+        taskUUID: taskUUID,
+        name: name ?? this.name,
+        notes: notes ?? this.notes,
+        status: status ?? this.status,
+        creator: creator,
+        plannedStartHour: plannedStartHour ?? this.plannedStartHour,
+        plannedEndHour: plannedEndHour ?? this.plannedEndHour,
+        createdAt: createdAt);
   }
 }

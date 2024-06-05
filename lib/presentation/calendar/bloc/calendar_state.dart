@@ -1,6 +1,6 @@
 part of 'calendar_bloc.dart';
 
-enum CalendarStatus { init, loading, idle }
+enum CalendarStatus { init, loading, idle, creatingEvent, updatingEvent }
 
 class CalendarState extends Equatable {
   final CalendarStatus status;

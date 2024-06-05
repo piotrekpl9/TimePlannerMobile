@@ -2,7 +2,7 @@ import 'package:time_planner_mobile/domain/group/entity/group.dart';
 import 'package:time_planner_mobile/domain/group/entity/invitation.dart';
 import 'package:time_planner_mobile/domain/group/entity/member.dart';
 import 'package:time_planner_mobile/domain/group/group_repository_abstraction.dart';
-import 'package:time_planner_mobile/infrastructure/common/http_client.dart';
+import 'package:time_planner_mobile/infrastructure/common/http_client/http_client.dart';
 
 class GroupRepository implements GroupRepositoryAbstraction {
   final HttpClient httpClient;
