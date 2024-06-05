@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:time_planner_mobile/domain/task/model/create_task_dto.dart';
@@ -21,6 +19,7 @@ class CalendarBloc extends Bloc<CalendarEvent, CalendarState> {
     on<UserEnteredScreenEvent>(_userEnteredScreen);
     on<AddTaskButtonTappedEvent>(_addTask);
     on<UpdateTaskButtonTappedEvent>(_updateTask);
+    on<DeleteTaskButtonTappedEvent>(_deleteTask);
   }
 
   void _userEnteredScreen(
@@ -33,7 +32,7 @@ class CalendarBloc extends Bloc<CalendarEvent, CalendarState> {
 
   void _addTask(
       AddTaskButtonTappedEvent event, Emitter<CalendarState> emitter) async {
-    emitter(state.copyWith(status: CalendarStatus.creatingEvent));
+    emitter(state.copyWith(status: CalendarStatus.creatingTask));
     var task = await taskService.createTaskForUser(event.createTaskDto);
     if (task != null) {
       var tasks = state.tasks..add(task);
@@ -43,7 +42,7 @@ class CalendarBloc extends Bloc<CalendarEvent, CalendarState> {
 
   void _updateTask(
       UpdateTaskButtonTappedEvent event, Emitter<CalendarState> emitter) async {
-    emitter(state.copyWith(status: CalendarStatus.updatingEvent));
+    emitter(state.copyWith(status: CalendarStatus.updatingTask));
     var task =
         await taskService.updateTask(event.taskUUID, event.updateTaskDto);
     if (task != null) {
@@ -53,16 +52,29 @@ class CalendarBloc extends Bloc<CalendarEvent, CalendarState> {
       if (oldTask == null) {
         return;
       }
-      state.tasks.remove(oldTask);
+
+      var tasks = state.tasks;
+      tasks.remove(oldTask);
       var newTask = oldTask.copyWith(
           name: task.name,
           notes: task.notes,
           plannedEndHour: task.plannedEndHour,
           plannedStartHour: task.plannedStartHour,
           status: task.status);
-      var tasks = state.tasks;
+
       tasks.add(newTask);
       emitter(state.copyWith(status: CalendarStatus.idle, tasks: tasks));
     }
+  }
+
+  void _deleteTask(
+      DeleteTaskButtonTappedEvent event, Emitter<CalendarState> emitter) async {
+    emitter(state.copyWith(status: CalendarStatus.deletingTask));
+    var result = await taskRepository.deleteTask(event.taskUUID);
+    var tasks = state.tasks;
+    if (result) {
+      tasks.removeWhere((element) => element.taskUUID == event.taskUUID);
+    }
+    emitter(state.copyWith(status: CalendarStatus.idle, tasks: tasks));
   }
 }

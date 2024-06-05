@@ -22,3 +22,9 @@ class UpdateTaskButtonTappedEvent extends CalendarEvent {
   const UpdateTaskButtonTappedEvent(
       {required this.taskUUID, required this.updateTaskDto});
 }
+
+class DeleteTaskButtonTappedEvent extends CalendarEvent {
+  final String taskUUID;
+
+  const DeleteTaskButtonTappedEvent({required this.taskUUID});
+}

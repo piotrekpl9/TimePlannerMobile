@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:time_planner_mobile/domain/task/entity/task.dart';
+import 'package:time_planner_mobile/domain/task/model/task_status.dart';
 import 'package:time_planner_mobile/presentation/calendar/bloc/calendar_bloc.dart';
 import 'package:time_planner_mobile/presentation/calendar/widget/create_task_dialog.dart';
 import 'package:time_planner_mobile/presentation/calendar/widget/task_details.dialog.dart';
@@ -45,7 +46,10 @@ class _CalendarScreenState extends State<CalendarScreen> {
       body: BlocConsumer<CalendarBloc, CalendarState>(
         bloc: context.read<CalendarBloc>(),
         listener: (context, state) {
-          if (state.status != CalendarStatus.creatingEvent) {
+          if (state.status != CalendarStatus.creatingTask) {
+            eventController.removeWhere(
+              (element) => true,
+            );
             eventController.addAll(state.tasks.map(
               (e) {
                 return CalendarEventData(
@@ -111,9 +115,11 @@ class _CalendarScreenState extends State<CalendarScreen> {
                       padding: const EdgeInsets.all(1.0),
                       child: Container(
                         padding: const EdgeInsets.all(2),
-                        decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(15)),
-                          color: Colors.blue,
+                        decoration: BoxDecoration(
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(15)),
+                          color: getTileColor(
+                              (events.first.event as TaskDto).status),
                         ),
                         child: Center(
                             child: Text(
@@ -134,5 +140,20 @@ class _CalendarScreenState extends State<CalendarScreen> {
         },
       ),
     );
+  }
+
+  Color getTileColor(TaskStatus status) {
+    switch (status) {
+      case TaskStatus.notStarted:
+        return Colors.blue;
+      case TaskStatus.inProgress:
+        return Colors.orange;
+      case TaskStatus.completed:
+        return Colors.green;
+      case TaskStatus.onHold:
+        return Colors.yellow;
+      case TaskStatus.cancelled:
+        return Colors.red;
+    }
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:time_planner_mobile/domain/task/entity/task.dart';
 import 'package:time_planner_mobile/domain/task/model/task_status.dart';
@@ -201,6 +202,7 @@ class _TaskDetailsDialogState extends State<TaskDetailsDialog> {
                               setState(() {
                                 edit = false;
                               });
+                              context.pop();
                             },
                             icon: const Icon(
                               Icons.done,
@@ -215,13 +217,26 @@ class _TaskDetailsDialogState extends State<TaskDetailsDialog> {
                             icon: const Icon(Icons.close, color: Colors.red))
                       ],
                     )
-                  : IconButton(
-                      onPressed: () {
-                        setState(() {
-                          edit = true;
-                        });
-                      },
-                      icon: const Icon(Icons.edit))
+                  : Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        IconButton(
+                            onPressed: () {
+                              setState(() {
+                                edit = true;
+                              });
+                            },
+                            icon: const Icon(Icons.edit)),
+                        IconButton(
+                            onPressed: () {
+                              context.read<CalendarBloc>().add(
+                                  DeleteTaskButtonTappedEvent(
+                                      taskUUID: widget.task.taskUUID));
+                              context.pop();
+                            },
+                            icon: const Icon(Icons.delete)),
+                      ],
+                    )
             ],
           ),
         ),
