@@ -19,15 +19,19 @@ class AuthenticationService implements AuthenticationServiceAbstraction {
 
   @override
   Future<bool> signIn(SignInDto dto) async {
-    var signInRes = await authenticationRepository.signIn(dto);
-    if (signInRes?.isEmpty ?? true) {
+    try {
+      var signInRes = await authenticationRepository.signIn(dto);
+      if (signInRes?.isEmpty ?? true) {
+        return false;
+      }
+
+      _controller.add(AuthStatus.authenticated);
+      await authenticationRepository.saveAccessToken(signInRes!);
+
+      return true;
+    } catch (e) {
       return false;
     }
-
-    _controller.add(AuthStatus.authenticated);
-    await authenticationRepository.saveAccessToken(signInRes!);
-
-    return true;
   }
 
   @override

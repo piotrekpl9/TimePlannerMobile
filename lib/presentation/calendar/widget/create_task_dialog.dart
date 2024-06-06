@@ -6,7 +6,8 @@ import 'package:time_planner_mobile/domain/task/model/create_task_dto.dart';
 import 'package:time_planner_mobile/presentation/calendar/bloc/calendar_bloc.dart';
 
 class CreateTaskDialog extends StatefulWidget {
-  const CreateTaskDialog({super.key});
+  final bool groupTask;
+  const CreateTaskDialog({super.key, required this.groupTask});
 
   @override
   State<CreateTaskDialog> createState() => _CreateTaskDialogState();
@@ -28,6 +29,10 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
+            if (widget.groupTask)
+              const Text("Create task for group")
+            else
+              const Text("Create task for user"),
             TextFormField(
               decoration: const InputDecoration(hintText: "Name"),
               controller: _nameController,
@@ -144,12 +149,16 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
                 return null;
               },
             ),
+            const SizedBox(
+              height: 10,
+            ),
             ElevatedButton(
                 onPressed: () {
                   if (_startDate == null || _endDate == null) {
                     return;
                   }
                   context.read<CalendarBloc>().add(AddTaskButtonTappedEvent(
+                      groupTask: widget.groupTask,
                       createTaskDto: CreateTaskDto(
                           name: _nameController.text,
                           notes: _descriptionController.text,

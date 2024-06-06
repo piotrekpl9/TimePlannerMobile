@@ -11,8 +11,10 @@ class UserEnteredScreenEvent extends CalendarEvent {}
 
 class AddTaskButtonTappedEvent extends CalendarEvent {
   final CreateTaskDto createTaskDto;
+  final bool groupTask;
 
-  const AddTaskButtonTappedEvent({required this.createTaskDto});
+  const AddTaskButtonTappedEvent(
+      {required this.createTaskDto, required this.groupTask});
 }
 
 class UpdateTaskButtonTappedEvent extends CalendarEvent {

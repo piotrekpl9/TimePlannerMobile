@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<AuthenticationBloc>.value(
-      value: diContainer.get<AuthenticationBloc>(),
+      value: diContainer.get<AuthenticationBloc>()..add(ApplicationStarted()),
       child: MaterialApp.router(
         title: 'TimePlanner Demo',
         theme: ThemeData(

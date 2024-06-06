@@ -15,19 +15,7 @@ import 'package:time_planner_mobile/presentation/signup/bloc/sign_up_bloc.dart';
 import 'package:time_planner_mobile/presentation/signup/sign_up_screen.dart';
 
 GoRouter setupRouter(BuildContext context) {
-  AuthenticationBloc authBloc = diContainer.get<AuthenticationBloc>();
   return GoRouter(
-    redirect: (context, state) {
-      if (authBloc.state.authStatus != AuthStatus.authenticated &&
-          authBloc.state.authStatus != AuthStatus.unknown) {
-        if (state.matchedLocation == SignInScreen.path ||
-            state.matchedLocation == SignUpScreen.path) {
-          return null;
-        }
-        return "/";
-      }
-      return null;
-    },
     routes: [
       GoRoute(
         path: '/',
@@ -46,6 +34,7 @@ GoRouter setupRouter(BuildContext context) {
           )..add(UserEnteredScreenEvent()),
           child: const CalendarScreen(),
         ),
+        redirect: (context, state) => _authenticatedGuard(),
       ),
       GoRoute(
         path: SignUpScreen.path,
@@ -58,4 +47,12 @@ GoRouter setupRouter(BuildContext context) {
       ),
     ],
   );
+}
+
+String? _authenticatedGuard() {
+  AuthenticationBloc authBloc = diContainer.get<AuthenticationBloc>();
+  if (authBloc.state.authStatus != AuthStatus.authenticated) {
+    return "/";
+  }
+  return null;
 }

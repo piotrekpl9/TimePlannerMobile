@@ -7,6 +7,8 @@ import 'package:time_planner_mobile/domain/task/model/task_status.dart';
 import 'package:time_planner_mobile/presentation/calendar/bloc/calendar_bloc.dart';
 import 'package:time_planner_mobile/presentation/calendar/widget/create_task_dialog.dart';
 import 'package:time_planner_mobile/presentation/calendar/widget/task_details.dialog.dart';
+import 'package:time_planner_mobile/presentation/common/app_colors.dart';
+import 'package:time_planner_mobile/presentation/common/main_button.dart';
 
 class CalendarScreen extends StatefulWidget {
   static String path = "/calendarScreen";
@@ -24,25 +26,65 @@ class _CalendarScreenState extends State<CalendarScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.blue,
-        child: const Icon(
-          Icons.add,
-          color: Colors.white,
+      floatingActionButton: IntrinsicHeight(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: FloatingActionButton(
+                heroTag: UniqueKey(),
+                backgroundColor: AppColors.main,
+                child: const Icon(
+                  Icons.group,
+                  color: Colors.white,
+                ),
+                onPressed: () async {
+                  await showAdaptiveDialog(
+                    context: context,
+                    builder: (ctx) {
+                      return BlocProvider.value(
+                        value: context.read<CalendarBloc>(),
+                        child: const CreateTaskDialog(
+                          groupTask: true,
+                        ),
+                      );
+                    },
+                  );
+                },
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: FloatingActionButton(
+                heroTag: UniqueKey(),
+                backgroundColor: AppColors.main,
+                child: const Icon(
+                  Icons.person,
+                  color: Colors.white,
+                ),
+                onPressed: () async {
+                  await showAdaptiveDialog(
+                    context: context,
+                    builder: (ctx) {
+                      return BlocProvider.value(
+                        value: context.read<CalendarBloc>(),
+                        child: const CreateTaskDialog(
+                          groupTask: false,
+                        ),
+                      );
+                    },
+                  );
+                },
+              ),
+            ),
+          ],
         ),
-        onPressed: () async {
-          await showAdaptiveDialog(
-            context: context,
-            builder: (ctx) {
-              return BlocProvider.value(
-                value: context.read<CalendarBloc>(),
-                child: const CreateTaskDialog(),
-              );
-            },
-          );
-        },
       ),
-      appBar: AppBar(),
+      appBar: AppBar(
+        centerTitle: true,
+        title: const Text("Calendar"),
+      ),
       body: BlocConsumer<CalendarBloc, CalendarState>(
         bloc: context.read<CalendarBloc>(),
         listener: (context, state) {
@@ -65,29 +107,38 @@ class _CalendarScreenState extends State<CalendarScreen> {
         },
         builder: (context, state) {
           return Column(mainAxisSize: MainAxisSize.min, children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                ElevatedButton(
-                    onPressed: () {
-                      setState(() {
-                        if (minuteHeight < 20) {
-                          minuteHeight += 0.2;
-                        }
-                      });
-                    },
-                    child: const Icon(Icons.zoom_in)),
-                ElevatedButton(
-                    onPressed: () {
-                      setState(() {
-                        if (minuteHeight > 0.8) {
-                          minuteHeight -= 0.2;
-                        }
-                      });
-                    },
-                    child: const Icon(Icons.zoom_out)),
-              ],
+            Padding(
+              padding: const EdgeInsets.only(bottom: 15.0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  MainButton(
+                      onPressed: () {
+                        setState(() {
+                          if (minuteHeight < 20) {
+                            minuteHeight += 0.2;
+                          }
+                        });
+                      },
+                      child: const Icon(
+                        Icons.zoom_in,
+                        color: Colors.white,
+                      )),
+                  MainButton(
+                      onPressed: () {
+                        setState(() {
+                          if (minuteHeight > 0.8) {
+                            minuteHeight -= 0.2;
+                          }
+                        });
+                      },
+                      child: const Icon(
+                        Icons.zoom_out,
+                        color: Colors.white,
+                      )),
+                ],
+              ),
             ),
             Expanded(
               child: IntrinsicHeight(
