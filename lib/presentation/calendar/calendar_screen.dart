@@ -196,7 +196,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
   Color getTileColor(TaskStatus status) {
     switch (status) {
       case TaskStatus.notStarted:
-        return Colors.blue;
+        return AppColors.main;
       case TaskStatus.inProgress:
         return Colors.orange;
       case TaskStatus.completed:
