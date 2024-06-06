@@ -3,7 +3,7 @@ import 'package:time_planner_mobile/infrastructure/authentication/abstraction/au
 import 'package:time_planner_mobile/infrastructure/authentication/abstraction/secure_storage_dao_abstraction.dart';
 import 'package:time_planner_mobile/infrastructure/authentication/model/sign_in_dto.dart';
 import 'package:time_planner_mobile/infrastructure/authentication/model/sign_up_dto.dart';
-import 'package:time_planner_mobile/infrastructure/common/http_client.dart';
+import 'package:time_planner_mobile/infrastructure/common/http_client/http_client.dart';
 
 class AuthenticationRepository implements AuthenticationRepositoryAbstraction {
   final SecureStorageDaoAbstraction secureStorageDao;

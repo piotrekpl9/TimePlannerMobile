@@ -67,7 +67,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         return null;
                       },
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     ElevatedButton(

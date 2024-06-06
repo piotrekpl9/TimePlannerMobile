@@ -17,14 +17,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<AuthenticationBloc>.value(
-      value: diContainer.get<AuthenticationBloc>(),
+      value: diContainer.get<AuthenticationBloc>()..add(ApplicationStarted()),
       child: MaterialApp.router(
         title: 'TimePlanner Demo',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        routerConfig: router,
+        routerConfig: setupRouter(context),
       ),
     );
   }
