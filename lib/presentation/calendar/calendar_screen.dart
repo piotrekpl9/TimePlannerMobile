@@ -8,7 +8,7 @@ import 'package:time_planner_mobile/presentation/calendar/bloc/calendar_bloc.dar
 import 'package:time_planner_mobile/presentation/calendar/widget/create_task_dialog.dart';
 import 'package:time_planner_mobile/presentation/calendar/widget/task_details.dialog.dart';
 import 'package:time_planner_mobile/presentation/common/app_colors.dart';
-import 'package:time_planner_mobile/presentation/common/main_button.dart';
+import 'package:time_planner_mobile/presentation/common/widgets/main_button.dart';
 
 class CalendarScreen extends StatefulWidget {
   static String path = "/calendarScreen";

@@ -11,8 +11,9 @@ class MainButton extends StatelessWidget {
     return ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
+            padding: const EdgeInsets.all(19),
             shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
             backgroundColor: AppColors.main),
         child: child);
   }

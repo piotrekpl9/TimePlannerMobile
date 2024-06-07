@@ -20,8 +20,9 @@ class MyApp extends StatelessWidget {
       value: diContainer.get<AuthenticationBloc>()..add(ApplicationStarted()),
       child: MaterialApp.router(
         title: 'TimePlanner Demo',
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          fontFamily: 'AvenirNext',
           useMaterial3: true,
         ),
         routerConfig: setupRouter(context),

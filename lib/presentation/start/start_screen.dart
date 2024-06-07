@@ -11,22 +11,26 @@ class StartScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(),
-        body: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(40.0),
-            child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
-              builder: (context, state) {
-                return Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    state.authStatus != AuthStatus.authenticated
-                        ? const UnauthenticatedView()
-                        : const AuthenticatedView()
-                  ],
-                );
-              },
+        extendBodyBehindAppBar: true,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+        ),
+        body: Container(
+          decoration: const BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage("assets/background.png"),
+                  fit: BoxFit.cover)),
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.all(40.0),
+              child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
+                builder: (context, state) {
+                  return state.authStatus != AuthStatus.authenticated
+                      ? const UnauthenticatedView()
+                      : const AuthenticatedView();
+                },
+              ),
             ),
           ),
         ));
