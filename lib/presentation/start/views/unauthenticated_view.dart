@@ -16,7 +16,7 @@ class UnauthenticatedView extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Expanded(
-          flex: 2,
+          flex: 5,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -32,6 +32,7 @@ class UnauthenticatedView extends StatelessWidget {
           ),
         ),
         Expanded(
+          flex: 3,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
