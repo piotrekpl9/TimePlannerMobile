@@ -1,24 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:time_planner_mobile/presentation/common/app_colors.dart';
 
 class StartScaffold extends StatelessWidget {
   final Widget child;
-  const StartScaffold({super.key, required this.child});
+  final Widget? bottomNavigationBar;
+  const StartScaffold(
+      {super.key, required this.child, this.bottomNavigationBar});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
+    return Container(
+      decoration: const BoxDecoration(
+        image: DecorationImage(
+            image: AssetImage("assets/background.png"), fit: BoxFit.cover),
       ),
-      body: Container(
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage("assets/background.png"), fit: BoxFit.cover),
+      child: Scaffold(
+        bottomNavigationBar: bottomNavigationBar,
+        resizeToAvoidBottomInset: true,
+        extendBodyBehindAppBar: true,
+        backgroundColor: Colors.transparent,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
         ),
-        child: child,
+        body: child,
       ),
     );
   }
