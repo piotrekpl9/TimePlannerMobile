@@ -1,29 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:time_planner_mobile/presentation/common/app_colors.dart';
 
-class GenericFormField extends StatelessWidget {
+class GenericDateFormField extends StatelessWidget {
   final TextEditingController controller;
   final String? Function(String?)? validator;
+  final void Function() onTap;
   final Function(String?)? onFieldSubmitted;
   final String? hint;
-  final bool? obscureText;
-  final FocusNode? focusNode;
   final bool? enabled;
-  const GenericFormField(
+  final FocusNode? focusNode;
+  const GenericDateFormField(
       {super.key,
       required this.controller,
-      this.obscureText,
-      this.enabled,
       this.onFieldSubmitted,
+      required this.onTap,
       this.validator,
+      this.enabled,
       this.focusNode,
       this.hint});
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      readOnly: true,
       enabled: enabled ?? true,
-      obscureText: obscureText ?? false,
+      onTap: onTap,
       cursorColor: AppColors.main,
       style: TextStyle(
           color: AppColors.main,
@@ -37,7 +38,7 @@ class GenericFormField extends StatelessWidget {
           contentPadding: const EdgeInsets.all(15),
           disabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
-              borderSide: const BorderSide(
+              borderSide: BorderSide(
                   color: Color.fromARGB(255, 164, 155, 135), width: 3)),
           enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),

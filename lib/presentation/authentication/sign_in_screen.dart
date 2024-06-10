@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
 import 'package:time_planner_mobile/infrastructure/authentication/model/auth_status.dart';
 import 'package:time_planner_mobile/presentation/authentication/bloc/authentication_bloc.dart';
 import 'package:time_planner_mobile/presentation/authentication/model/signin_data.dart';
+import 'package:time_planner_mobile/presentation/schedule/schedule_screen.dart';
 import 'package:time_planner_mobile/presentation/common/app_colors.dart';
 import 'package:time_planner_mobile/presentation/common/widgets/generic_form_field.dart';
 import 'package:time_planner_mobile/presentation/common/widgets/main_button.dart';
@@ -36,9 +38,15 @@ class _SignInScreenState extends State<SignInScreen> {
       bloc: context.read<AuthenticationBloc>(),
       listener: (context, state) {
         if (state.authStatus == AuthStatus.authenticated) {
-          ScaffoldMessenger.of(context)
-              .showSnackBar(const SnackBar(content: Text("SignIn Successful")));
-          context.pop();
+          Fluttertoast.showToast(
+              msg: "Sign-In Successful",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: Colors.green,
+              textColor: Colors.white,
+              fontSize: 16.0);
+          context.go(ScheduleScreen.path);
         }
       },
       child: StartScaffold(
@@ -79,6 +87,9 @@ class _SignInScreenState extends State<SignInScreen> {
                                       return "Value cannot be empty";
                                     }
                                     return null;
+                                  },
+                                  onFieldSubmitted: (p0) {
+                                    _passwordFocusNode.requestFocus();
                                   },
                                 ),
                                 const SizedBox(

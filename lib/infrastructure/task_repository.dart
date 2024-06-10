@@ -10,7 +10,7 @@ class TaskRepository implements TaskRepositoryAbstraction {
   TaskRepository({required this.httpClient});
 
   @override
-  Future<TaskDto?> createTaskForGroup(CreateTaskDto dto) async {
+  Future<Task?> createTaskForGroup(CreateTaskDto dto) async {
     try {
       var result = await httpClient.dio.post("api/task/group", data: dto);
       if (result.statusCode != 200) {
@@ -19,7 +19,7 @@ class TaskRepository implements TaskRepositoryAbstraction {
       if (result.data == null) {
         return null;
       }
-      var task = TaskDto.fromJson(result.data);
+      var task = Task.fromJson(result.data);
       return task;
     } catch (e) {
       return null;
@@ -27,7 +27,7 @@ class TaskRepository implements TaskRepositoryAbstraction {
   }
 
   @override
-  Future<TaskDto?> createTaskForUser(CreateTaskDto dto) async {
+  Future<Task?> createTaskForUser(CreateTaskDto dto) async {
     try {
       var result = await httpClient.dio.post("api/task/user", data: dto);
       if (result.statusCode != 200) {
@@ -36,7 +36,7 @@ class TaskRepository implements TaskRepositoryAbstraction {
       if (result.data == null) {
         return null;
       }
-      var task = TaskDto.fromJson(result.data);
+      var task = Task.fromJson(result.data);
       return task;
     } catch (e) {
       return null;
@@ -57,7 +57,7 @@ class TaskRepository implements TaskRepositoryAbstraction {
   }
 
   @override
-  Future<List<TaskDto>> readGroupTasks(String uuid) async {
+  Future<List<Task>> readGroupTasks(String uuid) async {
     try {
       var result = await httpClient.dio.get(
         "api/task/group/$uuid",
@@ -69,9 +69,9 @@ class TaskRepository implements TaskRepositoryAbstraction {
       if (result.data == null) {
         return [];
       }
-      var output = <TaskDto>[];
+      var output = <Task>[];
       for (var item in result.data) {
-        output.add(TaskDto.fromJson(item));
+        output.add(Task.fromJson(item));
       }
       return output;
     } catch (e) {
@@ -80,7 +80,7 @@ class TaskRepository implements TaskRepositoryAbstraction {
   }
 
   @override
-  Future<TaskDto?> readTask(String uuid) async {
+  Future<Task?> readTask(String uuid) async {
     try {
       var result = await httpClient.dio.get(
         "api/task/group/$uuid",
@@ -93,14 +93,14 @@ class TaskRepository implements TaskRepositoryAbstraction {
         return null;
       }
 
-      return TaskDto.fromJson(result.data);
+      return Task.fromJson(result.data);
     } catch (e) {
       return null;
     }
   }
 
   @override
-  Future<List<TaskDto>> readUserTasks() async {
+  Future<List<Task>> readUserTasks() async {
     try {
       var result = await httpClient.dio.get(
         "api/task/user",
@@ -112,9 +112,9 @@ class TaskRepository implements TaskRepositoryAbstraction {
       if (result.data == null) {
         return [];
       }
-      var output = <TaskDto>[];
+      var output = <Task>[];
       for (var item in result.data) {
-        output.add(TaskDto.fromJson(item));
+        output.add(Task.fromJson(item));
       }
       return output;
     } catch (e) {
@@ -123,7 +123,7 @@ class TaskRepository implements TaskRepositoryAbstraction {
   }
 
   @override
-  Future<TaskDto?> updateTask(String uuid, UpdateTaskDto dto) async {
+  Future<Task?> updateTask(String uuid, UpdateTaskDto dto) async {
     try {
       var result = await httpClient.dio.put("api/task/$uuid", data: dto);
       if (result.statusCode != 200) {
@@ -132,7 +132,7 @@ class TaskRepository implements TaskRepositoryAbstraction {
       if (result.data == null) {
         return null;
       }
-      var task = TaskDto.fromJson(result.data);
+      var task = Task.fromJson(result.data);
       return task;
     } catch (e) {
       return null;

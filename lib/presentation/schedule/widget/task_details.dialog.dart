@@ -5,10 +5,14 @@ import 'package:intl/intl.dart';
 import 'package:time_planner_mobile/domain/task/entity/task.dart';
 import 'package:time_planner_mobile/domain/task/model/task_status.dart';
 import 'package:time_planner_mobile/domain/task/model/update_task_dto.dart';
-import 'package:time_planner_mobile/presentation/calendar/bloc/calendar_bloc.dart';
+import 'package:time_planner_mobile/presentation/common/app_colors.dart';
+import 'package:time_planner_mobile/presentation/common/widgets/generic_date_form_field.dart';
+import 'package:time_planner_mobile/presentation/common/widgets/generic_form_field.dart';
+import 'package:time_planner_mobile/presentation/common/widgets/main_button.dart';
+import 'package:time_planner_mobile/presentation/schedule/bloc/calendar_bloc.dart';
 
 class TaskDetailsDialog extends StatefulWidget {
-  final TaskDto task;
+  final Task task;
   const TaskDetailsDialog({super.key, required this.task});
 
   @override
@@ -42,6 +46,13 @@ class _TaskDetailsDialogState extends State<TaskDetailsDialog> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
+      backgroundColor: AppColors.secondary,
+      shape: RoundedRectangleBorder(
+          side: BorderSide(
+            color: AppColors.main,
+            width: 3,
+          ),
+          borderRadius: BorderRadius.circular(15)),
       child: Form(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
@@ -49,9 +60,17 @@ class _TaskDetailsDialogState extends State<TaskDetailsDialog> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              TextFormField(
+              Icon(
+                size: 54,
+                Icons.edit_note,
+                color: AppColors.main,
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              GenericFormField(
+                hint: "Name",
                 enabled: edit,
-                decoration: const InputDecoration(hintText: "Name"),
                 controller: _nameController,
                 validator: (value) {
                   if (value == null) {
@@ -60,9 +79,12 @@ class _TaskDetailsDialogState extends State<TaskDetailsDialog> {
                   return null;
                 },
               ),
-              TextFormField(
+              SizedBox(
+                height: 20,
+              ),
+              GenericFormField(
+                hint: "Description",
                 enabled: edit,
-                decoration: const InputDecoration(hintText: "Description"),
                 controller: _descriptionController,
                 validator: (value) {
                   if (value == null) {
@@ -71,11 +93,13 @@ class _TaskDetailsDialogState extends State<TaskDetailsDialog> {
                   return null;
                 },
               ),
-              TextFormField(
+              SizedBox(
+                height: 20,
+              ),
+              GenericDateFormField(
+                hint: "Start Date",
                 enabled: edit,
-                decoration: const InputDecoration(label: Text("Start Date")),
                 controller: _startDateController,
-                readOnly: true,
                 onTap: () async {
                   var date = await showDatePicker(
                       context: context,
@@ -111,11 +135,13 @@ class _TaskDetailsDialogState extends State<TaskDetailsDialog> {
                   return null;
                 },
               ),
-              TextFormField(
+              SizedBox(
+                height: 20,
+              ),
+              GenericDateFormField(
+                hint: "End Date",
                 enabled: edit,
-                decoration: const InputDecoration(label: Text("End Date")),
                 controller: _endDateController,
-                readOnly: true,
                 onTap: () async {
                   DateTime? date;
                   if (_startDate != null) {
@@ -169,12 +195,43 @@ class _TaskDetailsDialogState extends State<TaskDetailsDialog> {
                   return null;
                 },
               ),
-              DropdownButton(
+              SizedBox(
+                height: 20,
+              ),
+              DropdownButtonFormField(
+                  decoration: InputDecoration(
+                      hintStyle: TextStyle(color: AppColors.main),
+                      contentPadding: const EdgeInsets.all(15),
+                      disabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: const BorderSide(
+                              color: Color.fromARGB(255, 164, 155, 135),
+                              width: 3)),
+                      enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide(
+                              color: edit
+                                  ? AppColors.main
+                                  : const Color.fromARGB(255, 164, 155, 135),
+                              width: 3)),
+                      focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide:
+                              BorderSide(color: AppColors.main, width: 3)),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide:
+                              BorderSide(color: AppColors.main, width: 3))),
                   value: _currentTaskStatus,
+                  dropdownColor: AppColors.secondary,
+                  isExpanded: true,
                   items: TaskStatus.values
                       .map((e) => DropdownMenuItem<TaskStatus>(
                             value: e,
-                            child: Text(e.toPresentativeString()),
+                            child: Text(
+                              e.toPresentativeString(),
+                              style: TextStyle(color: AppColors.main),
+                            ),
                           ))
                       .toList(),
                   onChanged: edit
@@ -184,11 +241,14 @@ class _TaskDetailsDialogState extends State<TaskDetailsDialog> {
                           });
                         }
                       : null),
+              SizedBox(
+                height: 20,
+              ),
               edit
                   ? Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        IconButton(
+                        MainButton(
                             onPressed: () {
                               context.read<CalendarBloc>().add(
                                   UpdateTaskButtonTappedEvent(
@@ -204,37 +264,62 @@ class _TaskDetailsDialogState extends State<TaskDetailsDialog> {
                               });
                               context.pop();
                             },
-                            icon: const Icon(
-                              Icons.done,
-                              color: Colors.green,
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 15.0),
+                              child: Icon(
+                                Icons.done,
+                                color: AppColors.secondary,
+                              ),
                             )),
-                        IconButton(
+                        MainButton(
                             onPressed: () {
                               setState(() {
                                 edit = false;
                               });
                             },
-                            icon: const Icon(Icons.close, color: Colors.red))
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 15.0),
+                              child: Icon(
+                                Icons.close,
+                                color: AppColors.secondary,
+                              ),
+                            ))
                       ],
                     )
                   : Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        IconButton(
+                        MainButton(
                             onPressed: () {
                               setState(() {
                                 edit = true;
                               });
                             },
-                            icon: const Icon(Icons.edit)),
-                        IconButton(
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 15.0),
+                              child: Icon(
+                                Icons.edit,
+                                color: AppColors.secondary,
+                              ),
+                            )),
+                        MainButton(
                             onPressed: () {
                               context.read<CalendarBloc>().add(
                                   DeleteTaskButtonTappedEvent(
                                       taskUUID: widget.task.taskUUID));
                               context.pop();
                             },
-                            icon: const Icon(Icons.delete)),
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 15.0),
+                              child: Icon(
+                                Icons.delete,
+                                color: AppColors.secondary,
+                              ),
+                            )),
                       ],
                     )
             ],
