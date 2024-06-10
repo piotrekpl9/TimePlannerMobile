@@ -5,6 +5,7 @@ import 'package:time_planner_mobile/domain/task/task_repository_abstraction.dart
 import 'package:time_planner_mobile/domain/task/task_service_abstraction.dart';
 import 'package:time_planner_mobile/infrastructure/authentication/abstraction/authentication_service_abstraction.dart';
 import 'package:time_planner_mobile/presentation/authentication/sign_in_screen.dart';
+import 'package:time_planner_mobile/presentation/profile/user_profile_screen.dart';
 import 'package:time_planner_mobile/presentation/schedule/bloc/calendar_bloc.dart';
 import 'package:time_planner_mobile/presentation/schedule/schedule_screen.dart';
 import 'package:time_planner_mobile/presentation/start/start_screen.dart';
@@ -20,18 +21,44 @@ GoRouter setupRouter() {
         builder: (context, state) => const StartScreen(),
       ),
       GoRoute(
+        path: UserProfileScreen.path,
+        pageBuilder: (context, state) {
+          return CustomTransitionPage(
+            key: state.pageKey,
+            child: UserProfileScreen(),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
+              // Change the opacity of the screen using a Curve based on the the animation's
+              // value
+              return child;
+            },
+          );
+        },
+      ),
+      GoRoute(
         path: SignInScreen.path,
         builder: (context, state) => const SignInScreen(),
       ),
       GoRoute(
         path: ScheduleScreen.path,
-        builder: (context, state) => BlocProvider(
-          create: (context) => CalendarBloc(
-            taskService: diContainer.get<TaskServiceAbstraction>(),
-            taskRepository: diContainer.get<TaskRepositoryAbstraction>(),
-          )..add(UserEnteredScreenEvent()),
-          child: const ScheduleScreen(),
-        ),
+        pageBuilder: (context, state) {
+          return CustomTransitionPage(
+            key: state.pageKey,
+            child: BlocProvider(
+              create: (context) => CalendarBloc(
+                taskService: diContainer.get<TaskServiceAbstraction>(),
+                taskRepository: diContainer.get<TaskRepositoryAbstraction>(),
+              )..add(UserEnteredScreenEvent()),
+              child: const ScheduleScreen(),
+            ),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
+              // Change the opacity of the screen using a Curve based on the the animation's
+              // value
+              return child;
+            },
+          );
+        },
       ),
       GoRoute(
         path: SignUpScreen.path,
