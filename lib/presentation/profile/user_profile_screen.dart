@@ -87,7 +87,11 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                     child: Padding(
                       padding: const EdgeInsets.only(bottom: 10.0),
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          context
+                              .read<AuthenticationBloc>()
+                              .add(SignOutButtonPressed());
+                        },
                         style: ElevatedButton.styleFrom(
                             backgroundColor: AppColors.main,
                             shape: const CircleBorder(
@@ -97,7 +101,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                             fixedSize: Size(
                                 constraints.maxHeight, constraints.maxHeight)),
                         child: const Icon(
-                          Icons.add,
+                          Icons.logout,
                           color: Colors.black,
                         ),
                       ),
@@ -174,20 +178,6 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                   child: const ChangePasswordDialog(),
                                 ),
                               );
-                            },
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          MainButton(
-                            child: Text(
-                              "Sign out",
-                              style: TextStyle(color: AppColors.secondary),
-                            ),
-                            onPressed: () {
-                              context
-                                  .read<AuthenticationBloc>()
-                                  .add(SignOutButtonPressed());
                             },
                           ),
                         ],

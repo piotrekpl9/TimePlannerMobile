@@ -439,7 +439,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                             child: Center(
                                 child: Text(
                               events.first.title,
-                              style: const TextStyle(color: Colors.white),
+                              style: TextStyle(color: AppColors.secondary),
                             )),
                           ),
                         );

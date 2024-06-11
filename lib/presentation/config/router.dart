@@ -30,6 +30,13 @@ GoRouter setupRouter() {
       GoRoute(
         path: '/',
         builder: (context, state) => const StartScreen(),
+        redirect: (context, state) {
+          var authBloc = context.read<AuthenticationBloc>();
+          if (authBloc.state.authStatus == AuthStatus.authenticated) {
+            return ScheduleScreen.path;
+          }
+          return null;
+        },
       ),
       GoRoute(
         path: UserProfileScreen.path,
