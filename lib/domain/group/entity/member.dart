@@ -18,7 +18,7 @@ class Member {
       uuid: json['memberId'],
       name: json['name'],
       surname: json['surname'],
-      email: json['email'],
+      email: json['email'] ?? "",
       createdAt: DateTime.parse(json['createdAt']),
     );
   }

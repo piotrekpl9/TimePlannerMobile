@@ -8,6 +8,8 @@ import 'package:time_planner_mobile/domain/user/user_repository_abstraction.dart
 import 'package:time_planner_mobile/domain/user/user_service_abstraction.dart';
 import 'package:time_planner_mobile/infrastructure/authentication/abstraction/authentication_service_abstraction.dart';
 import 'package:time_planner_mobile/presentation/authentication/sign_in_screen.dart';
+import 'package:time_planner_mobile/presentation/group/bloc/group_bloc.dart';
+import 'package:time_planner_mobile/presentation/group/group_screen.dart';
 import 'package:time_planner_mobile/presentation/profile/bloc/user_profile_bloc.dart';
 import 'package:time_planner_mobile/presentation/profile/user_profile_screen.dart';
 import 'package:time_planner_mobile/presentation/schedule/bloc/calendar_bloc.dart';
@@ -31,12 +33,31 @@ GoRouter setupRouter() {
             key: state.pageKey,
             child: BlocProvider(
               create: (context) => UserProfileBloc(
-                  userService: diContainer.get<UserServiceAbstraction>(),
-                  userRepository: diContainer.get<UserRepositoryAbstraction>(),
+                userService: diContainer.get<UserServiceAbstraction>(),
+                userRepository: diContainer.get<UserRepositoryAbstraction>(),
+              )..add(UserEnteredProfileScreenEvent()),
+              child: const UserProfileScreen(),
+            ),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
+              // Change the opacity of the screen using a Curve based on the the animation's
+              // value
+              return child;
+            },
+          );
+        },
+      ),
+      GoRoute(
+        path: GroupScreen.path,
+        pageBuilder: (context, state) {
+          return CustomTransitionPage(
+            key: state.pageKey,
+            child: BlocProvider(
+              create: (context) => GroupBloc(
                   groupRepository:
                       diContainer.get<GroupRepositoryAbstraction>())
-                ..add(UserEnteredProfileScreenEvent()),
-              child: const UserProfileScreen(),
+                ..add(UserEnteredGroupScreenEvent()),
+              child: const GroupScreen(),
             ),
             transitionsBuilder:
                 (context, animation, secondaryAnimation, child) {

@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:time_planner_mobile/domain/task/entity/task.dart';
 import 'package:time_planner_mobile/domain/task/model/task_status.dart';
+import 'package:time_planner_mobile/presentation/group/group_screen.dart';
 import 'package:time_planner_mobile/presentation/profile/user_profile_screen.dart';
 import 'package:time_planner_mobile/presentation/schedule/bloc/calendar_bloc.dart';
 import 'package:time_planner_mobile/presentation/schedule/widget/create_task_dialog.dart';
@@ -75,10 +76,14 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                       Expanded(
                         child: IconButton(
                           icon: const Icon(
-                            Icons.calendar_month,
-                            color: Colors.white,
+                            Icons.people,
+                            color: Colors.black,
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            context.go(
+                              GroupScreen.path,
+                            );
+                          },
                         ),
                       ),
                     ],

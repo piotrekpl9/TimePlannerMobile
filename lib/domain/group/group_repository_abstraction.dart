@@ -11,7 +11,7 @@ abstract class GroupRepositoryAbstraction {
   Future<bool> leaveGroup(String groupId);
 
   Future<Group?> getGroup();
-  Future<List<Invitation>> getdPendingInvitation();
+  Future<List<Invitation>> getPendingInvitation();
   Future<List<Invitation>> getGroupInvitations();
   Future<List<Member>> getGroupMembers();
 

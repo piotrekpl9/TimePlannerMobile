@@ -189,7 +189,7 @@ class GroupRepository implements GroupRepositoryAbstraction {
   }
 
   @override
-  Future<List<Invitation>> getdPendingInvitation() async {
+  Future<List<Invitation>> getPendingInvitation() async {
     try {
       var result = await httpClient.dio.get(
         "api/group/pending-invitations",
@@ -203,7 +203,8 @@ class GroupRepository implements GroupRepositoryAbstraction {
       }
       var output = <Invitation>[];
       for (var item in result.data) {
-        output.add(Invitation.fromJson(item));
+        var x = Invitation.fromJson(item);
+        output.add(x);
       }
       return output;
     } catch (e) {
