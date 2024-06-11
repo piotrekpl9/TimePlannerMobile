@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:time_planner_mobile/presentation/authentication/bloc/authentication_bloc.dart';
 import 'package:time_planner_mobile/presentation/common/app_colors.dart';
 import 'package:time_planner_mobile/presentation/common/widgets/generic_form_field.dart';
 import 'package:time_planner_mobile/presentation/common/widgets/main_button.dart';
@@ -174,7 +175,21 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                 ),
                               );
                             },
-                          )
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          MainButton(
+                            child: Text(
+                              "Sign out",
+                              style: TextStyle(color: AppColors.secondary),
+                            ),
+                            onPressed: () {
+                              context
+                                  .read<AuthenticationBloc>()
+                                  .add(SignOutButtonPressed());
+                            },
+                          ),
                         ],
                       ),
                     ),

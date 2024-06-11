@@ -7,7 +7,6 @@ import 'package:time_planner_mobile/infrastructure/authentication/abstraction/au
 import 'package:time_planner_mobile/infrastructure/authentication/abstraction/authentication_service_abstraction.dart';
 import 'package:time_planner_mobile/infrastructure/authentication/model/auth_status.dart';
 import 'package:time_planner_mobile/infrastructure/authentication/model/sign_in_dto.dart';
-import 'package:time_planner_mobile/infrastructure/group_repository.dart';
 import 'package:time_planner_mobile/presentation/authentication/model/signin_data.dart';
 
 part 'authentication_event.dart';
