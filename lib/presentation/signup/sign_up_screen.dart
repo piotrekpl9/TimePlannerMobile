@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:time_planner_mobile/presentation/common/app_colors.dart';
+import 'package:time_planner_mobile/presentation/common/widgets/generic_form_field.dart';
+import 'package:time_planner_mobile/presentation/common/widgets/main_button.dart';
+import 'package:time_planner_mobile/presentation/common/widgets/start_scaffold.dart';
 import 'package:time_planner_mobile/presentation/signup/bloc/sign_up_bloc.dart';
 import 'package:time_planner_mobile/presentation/signup/signup_data.dart';
 
@@ -42,18 +46,35 @@ class _SignUpScreenState extends State<SignUpScreen> {
           context.pop();
         }
       },
-      child: Scaffold(
-          appBar: AppBar(),
-          body: Padding(
-            padding: const EdgeInsets.all(40.0),
+      child: StartScaffold(
+          child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 40),
+        child: SingleChildScrollView(
+          child: SizedBox(
+            height: MediaQuery.of(context).size.height,
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                Spacer(
+                  flex: 2,
+                ),
+                Text(
+                  textAlign: TextAlign.start,
+                  "Sign up",
+                  style: TextStyle(color: AppColors.main, fontSize: 40),
+                ),
                 Form(
                   key: _formKey,
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      TextFormField(
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      GenericFormField(
+                        hint: "Name",
                         controller: _nameController,
                         validator: (value) {
                           if (value == null) {
@@ -62,7 +83,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           return null;
                         },
                       ),
-                      TextFormField(
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      GenericFormField(
+                        hint: "Surname",
                         controller: _surnameController,
                         focusNode: _surnameFocusNode,
                         validator: (value) {
@@ -72,7 +97,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           return null;
                         },
                       ),
-                      TextFormField(
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      GenericFormField(
+                        hint: "Email",
                         controller: _emailController,
                         focusNode: _emailFocusNode,
                         validator: (value) {
@@ -82,7 +111,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           return null;
                         },
                       ),
-                      TextFormField(
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      GenericFormField(
+                        hint: "Password",
+                        obscureText: true,
                         controller: _passwordController,
                         focusNode: _passwordFocusNode,
                         validator: (value) {
@@ -92,28 +126,34 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           return null;
                         },
                       ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      ElevatedButton(
-                        onPressed: () {
-                          if (_formKey.currentState!.validate()) {
-                            context.read<SignUpBloc>().add(SignUpButtonPressed(
-                                signUpData: SignUpData(
-                                    name: _nameController.text,
-                                    surname: _surnameController.text,
-                                    email: _emailController.text,
-                                    password: _passwordController.text)));
-                          }
-                        },
-                        child: const Text("Sign up"),
-                      ),
                     ],
                   ),
+                ),
+                Spacer(),
+                MainButton(
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      context.read<SignUpBloc>().add(SignUpButtonPressed(
+                          signUpData: SignUpData(
+                              name: _nameController.text,
+                              surname: _surnameController.text,
+                              email: _emailController.text,
+                              password: _passwordController.text)));
+                    }
+                  },
+                  child: Text(
+                    "Sign up",
+                    style: TextStyle(color: AppColors.secondary),
+                  ),
+                ),
+                SizedBox(
+                  height: 40,
                 )
               ],
             ),
-          )),
+          ),
+        ),
+      )),
     );
   }
 }

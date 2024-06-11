@@ -123,7 +123,7 @@ class GroupRepository implements GroupRepositoryAbstraction {
   }
 
   @override
-  Future<Group?> readGroup() async {
+  Future<Group?> getGroup() async {
     try {
       var result = await httpClient.dio.get(
         "api/group",
@@ -143,7 +143,7 @@ class GroupRepository implements GroupRepositoryAbstraction {
   }
 
   @override
-  Future<List<Invitation>> readGroupInvitations() async {
+  Future<List<Invitation>> getGroupInvitations() async {
     try {
       var result = await httpClient.dio.get(
         "api/group/invitations",
@@ -166,7 +166,7 @@ class GroupRepository implements GroupRepositoryAbstraction {
   }
 
   @override
-  Future<List<Member>> readGroupMembers() async {
+  Future<List<Member>> getGroupMembers() async {
     try {
       var result = await httpClient.dio.get(
         "api/group/members",
@@ -189,7 +189,7 @@ class GroupRepository implements GroupRepositoryAbstraction {
   }
 
   @override
-  Future<List<Invitation>> readPendingInvitation() async {
+  Future<List<Invitation>> getPendingInvitation() async {
     try {
       var result = await httpClient.dio.get(
         "api/group/pending-invitations",
@@ -203,7 +203,8 @@ class GroupRepository implements GroupRepositoryAbstraction {
       }
       var output = <Invitation>[];
       for (var item in result.data) {
-        output.add(Invitation.fromJson(item));
+        var x = Invitation.fromJson(item);
+        output.add(x);
       }
       return output;
     } catch (e) {

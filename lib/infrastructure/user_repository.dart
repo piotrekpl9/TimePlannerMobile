@@ -1,4 +1,5 @@
 import 'package:time_planner_mobile/domain/user/model/update_password_dto.dart';
+import 'package:time_planner_mobile/domain/user/model/user.dart';
 import 'package:time_planner_mobile/domain/user/user_repository_abstraction.dart';
 import 'package:time_planner_mobile/infrastructure/common/http_client/http_client.dart';
 
@@ -15,6 +16,19 @@ class UserRepository implements UserRepositoryAbstraction {
       return result.statusCode == 200;
     } catch (e) {
       return false;
+    }
+  }
+
+  @override
+  Future<User?> getCurrentUser() async {
+    try {
+      var result = await httpClient.dio.get("api/user/");
+      if (result.statusCode == 200) {
+        return User.fromJson(result.data);
+      }
+      return null;
+    } catch (e) {
+      return null;
     }
   }
 }

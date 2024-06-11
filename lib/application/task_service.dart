@@ -11,12 +11,12 @@ class TaskService implements TaskServiceAbstraction {
   TaskService({required this.taskRepository});
 
   @override
-  Future<TaskDto?> createTaskForGroup(CreateTaskDto dto) async {
+  Future<Task?> createTaskForGroup(CreateTaskDto dto) async {
     return await taskRepository.createTaskForGroup(dto);
   }
 
   @override
-  Future<TaskDto?> createTaskForUser(CreateTaskDto dto) async {
+  Future<Task?> createTaskForUser(CreateTaskDto dto) async {
     return await taskRepository.createTaskForUser(dto);
   }
 
@@ -26,7 +26,7 @@ class TaskService implements TaskServiceAbstraction {
   }
 
   @override
-  Future<TaskDto?> updateTask(String uuid, UpdateTaskDto dto) async {
+  Future<Task?> updateTask(String uuid, UpdateTaskDto dto) async {
     return await taskRepository.updateTask(uuid, dto);
   }
 }

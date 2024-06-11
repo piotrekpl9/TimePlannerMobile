@@ -10,10 +10,10 @@ abstract class GroupRepositoryAbstraction {
   Future<bool> cancelInvitation(String groupId, String invitationId);
   Future<bool> leaveGroup(String groupId);
 
-  Future<Group?> readGroup();
-  Future<List<Invitation>> readPendingInvitation();
-  Future<List<Invitation>> readGroupInvitations();
-  Future<List<Member>> readGroupMembers();
+  Future<Group?> getGroup();
+  Future<List<Invitation>> getPendingInvitation();
+  Future<List<Invitation>> getGroupInvitations();
+  Future<List<Member>> getGroupMembers();
 
   Future<bool> deleteGroupMember(String groupId, String memberId);
   Future<bool> deleteGroup(String groupId);
