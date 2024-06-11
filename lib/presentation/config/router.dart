@@ -1,10 +1,14 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:time_planner_mobile/di_container.dart';
+import 'package:time_planner_mobile/domain/group/group_repository_abstraction.dart';
 import 'package:time_planner_mobile/domain/task/task_repository_abstraction.dart';
 import 'package:time_planner_mobile/domain/task/task_service_abstraction.dart';
+import 'package:time_planner_mobile/domain/user/user_repository_abstraction.dart';
+import 'package:time_planner_mobile/domain/user/user_service_abstraction.dart';
 import 'package:time_planner_mobile/infrastructure/authentication/abstraction/authentication_service_abstraction.dart';
 import 'package:time_planner_mobile/presentation/authentication/sign_in_screen.dart';
+import 'package:time_planner_mobile/presentation/profile/bloc/user_profile_bloc.dart';
 import 'package:time_planner_mobile/presentation/profile/user_profile_screen.dart';
 import 'package:time_planner_mobile/presentation/schedule/bloc/calendar_bloc.dart';
 import 'package:time_planner_mobile/presentation/schedule/schedule_screen.dart';
@@ -25,7 +29,15 @@ GoRouter setupRouter() {
         pageBuilder: (context, state) {
           return CustomTransitionPage(
             key: state.pageKey,
-            child: UserProfileScreen(),
+            child: BlocProvider(
+              create: (context) => UserProfileBloc(
+                  userService: diContainer.get<UserServiceAbstraction>(),
+                  userRepository: diContainer.get<UserRepositoryAbstraction>(),
+                  groupRepository:
+                      diContainer.get<GroupRepositoryAbstraction>())
+                ..add(UserEnteredProfileScreenEvent()),
+              child: const UserProfileScreen(),
+            ),
             transitionsBuilder:
                 (context, animation, secondaryAnimation, child) {
               // Change the opacity of the screen using a Curve based on the the animation's

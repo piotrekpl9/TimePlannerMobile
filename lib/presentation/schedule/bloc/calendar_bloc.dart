@@ -25,7 +25,7 @@ class CalendarBloc extends Bloc<CalendarEvent, CalendarState> {
   void _userEnteredScreen(
       UserEnteredScreenEvent event, Emitter<CalendarState> emitter) async {
     emitter(state.copyWith(status: CalendarStatus.loading));
-    var tasks = await taskRepository.readUserTasks();
+    var tasks = await taskRepository.getUserTasks();
 
     emitter(state.copyWith(status: CalendarStatus.idle, tasks: tasks));
   }

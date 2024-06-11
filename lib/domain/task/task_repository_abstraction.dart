@@ -7,9 +7,9 @@ abstract class TaskRepositoryAbstraction {
   Future<Task?> createTaskForGroup(CreateTaskDto dto);
   Future<Task?> updateTask(String uuid, UpdateTaskDto dto);
 
-  Future<Task?> readTask(String uuid);
-  Future<List<Task>> readUserTasks();
-  Future<List<Task>> readGroupTasks(String uuid);
+  Future<Task?> getTask(String uuid);
+  Future<List<Task>> getUserTasks();
+  Future<List<Task>> getGroupTasks(String uuid);
 
   Future<bool> deleteTask(String uuid);
 }

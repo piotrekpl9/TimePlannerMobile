@@ -61,7 +61,7 @@ class AuthenticationBloc
       ApplicationStarted event, Emitter<AuthenticationState> emitter) async {
     var token = await _authenticationRepository.getAccessToken();
     if (token?.isEmpty ?? true) {
-      await _groupRepository.readGroup();
+      await _groupRepository.getGroup();
       emitter(state.copyWith(AuthStatus.unauthenticated));
       return;
     }

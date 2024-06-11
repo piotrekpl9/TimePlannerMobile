@@ -57,7 +57,7 @@ class TaskRepository implements TaskRepositoryAbstraction {
   }
 
   @override
-  Future<List<Task>> readGroupTasks(String uuid) async {
+  Future<List<Task>> getGroupTasks(String uuid) async {
     try {
       var result = await httpClient.dio.get(
         "api/task/group/$uuid",
@@ -80,7 +80,7 @@ class TaskRepository implements TaskRepositoryAbstraction {
   }
 
   @override
-  Future<Task?> readTask(String uuid) async {
+  Future<Task?> getTask(String uuid) async {
     try {
       var result = await httpClient.dio.get(
         "api/task/group/$uuid",
@@ -100,7 +100,7 @@ class TaskRepository implements TaskRepositoryAbstraction {
   }
 
   @override
-  Future<List<Task>> readUserTasks() async {
+  Future<List<Task>> getUserTasks() async {
     try {
       var result = await httpClient.dio.get(
         "api/task/user",
