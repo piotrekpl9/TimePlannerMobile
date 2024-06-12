@@ -26,145 +26,158 @@ class _GroupViewState extends State<GroupView> {
             _groupController.text = "";
           }
         }
-        return Center(
-          child: Padding(
-            padding: const EdgeInsets.all(30.0),
-            child: Container(
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: AppColors.main,
-                  width: 3,
+        return Stack(
+          children: [
+            Center(
+              child: Container(
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: AppColors.main,
+                    width: 3,
+                  ),
+                  borderRadius: BorderRadius.circular(15),
+                  color: AppColors.secondary,
                 ),
-                borderRadius: BorderRadius.circular(15),
-                color: AppColors.secondary,
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Icon(
-                      Icons.people_outline,
-                      size: 64,
-                      color: AppColors.main,
-                    ),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    TextFormField(
-                      cursorColor: AppColors.main,
-                      style: TextStyle(
-                          color: AppColors.main,
-                          fontSize: 20,
-                          decoration: null,
-                          decorationStyle: null,
-                          textBaseline: null),
-                      decoration: InputDecoration(
-                          enabled: false,
-                          hintText: "Name",
-                          hintStyle: TextStyle(color: AppColors.main),
-                          contentPadding: const EdgeInsets.all(15),
-                          disabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              borderSide:
-                                  BorderSide(color: AppColors.main, width: 3)),
-                          enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              borderSide:
-                                  BorderSide(color: AppColors.main, width: 3)),
-                          focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              borderSide:
-                                  BorderSide(color: AppColors.main, width: 3)),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              borderSide:
-                                  BorderSide(color: AppColors.main, width: 3))),
-                      controller: _groupController,
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Expanded(
-                      child: Container(
-                        alignment:
-                            state.group == null ? Alignment.center : null,
-                        padding: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: AppColors.main,
-                            width: 3,
-                          ),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: SingleChildScrollView(
-                          child: Column(
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Center(
+                    child: state.group != null
+                        ? Column(
+                            mainAxisSize: MainAxisSize.min,
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: state.group != null
-                                    ? Text(
-                                        "Members",
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                            color: AppColors.main,
-                                            fontSize: 18),
-                                      )
-                                    : const SizedBox(),
+                              Icon(
+                                Icons.people_outline,
+                                size: 64,
+                                color: AppColors.main,
                               ),
-                              if (state.group == null)
-                                Center(
-                                  child: Text(
-                                    "Nothing to see here",
-                                    style: TextStyle(
+                              const SizedBox(
+                                height: 30,
+                              ),
+                              TextFormField(
+                                cursorColor: AppColors.main,
+                                style: TextStyle(
+                                    color: AppColors.main,
+                                    fontSize: 20,
+                                    decoration: null,
+                                    decorationStyle: null,
+                                    textBaseline: null),
+                                decoration: InputDecoration(
+                                    enabled: false,
+                                    hintText: "Name",
+                                    hintStyle: TextStyle(color: AppColors.main),
+                                    contentPadding: const EdgeInsets.all(15),
+                                    disabledBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                        borderSide: BorderSide(
+                                            color: AppColors.main, width: 3)),
+                                    enabledBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                        borderSide: BorderSide(
+                                            color: AppColors.main, width: 3)),
+                                    focusedBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                        borderSide: BorderSide(
+                                            color: AppColors.main, width: 3)),
+                                    border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                        borderSide: BorderSide(
+                                            color: AppColors.main, width: 3))),
+                                controller: _groupController,
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              Expanded(
+                                child: Container(
+                                  alignment: state.group == null
+                                      ? Alignment.center
+                                      : null,
+                                  padding: const EdgeInsets.all(10),
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
                                       color: AppColors.main,
+                                      width: 3,
                                     ),
-                                    textAlign: TextAlign.center,
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: SingleChildScrollView(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.stretch,
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: state.group != null
+                                              ? Text(
+                                                  "Members",
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                      color: AppColors.main,
+                                                      fontSize: 18),
+                                                )
+                                              : const SizedBox(),
+                                        ),
+                                        if (state.group == null)
+                                          Center(
+                                            child: Text(
+                                              "Nothing to see here",
+                                              style: TextStyle(
+                                                color: AppColors.main,
+                                              ),
+                                              textAlign: TextAlign.center,
+                                            ),
+                                          ),
+                                        if (state.group != null)
+                                          ...state.group!.members.map(
+                                            (e) {
+                                              return Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        vertical: 5.0),
+                                                child: Text(
+                                                  "${e.name} ${e.surname}",
+                                                  style: TextStyle(
+                                                      color: AppColors.main,
+                                                      overflow: TextOverflow
+                                                          .ellipsis),
+                                                ),
+                                              );
+                                            },
+                                          ),
+                                      ],
+                                    ),
                                   ),
                                 ),
-                              if (state.group != null)
-                                ...state.group!.members.map(
-                                  (e) {
-                                    return Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 5.0),
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              state.group != null
+                                  ? MainButton(
                                       child: Text(
-                                        "${e.name} ${e.surname}",
+                                        "Leave group",
                                         style: TextStyle(
-                                            color: AppColors.main,
-                                            overflow: TextOverflow.ellipsis),
+                                            color: AppColors.secondary),
                                       ),
-                                    );
-                                  },
-                                ),
+                                      onPressed: () {
+                                        context.read<GroupBloc>().add(
+                                            LeaveGroupButtonPressedEvent());
+                                      },
+                                    )
+                                  : const SizedBox(),
                             ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    state.group != null
-                        ? MainButton(
-                            child: Text(
-                              "Leave group",
-                              style: TextStyle(color: AppColors.secondary),
-                            ),
-                            onPressed: () {
-                              context
-                                  .read<GroupBloc>()
-                                  .add(LeaveGroupButtonPressedEvent());
-                            },
                           )
-                        : const SizedBox(),
-                  ],
+                        : Text(
+                            "You have to be a group member to see content here",
+                            style: TextStyle(color: AppColors.main),
+                            textAlign: TextAlign.center,
+                          ),
+                  ),
                 ),
               ),
             ),
-          ),
+          ],
         );
       },
     );

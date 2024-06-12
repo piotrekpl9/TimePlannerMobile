@@ -27,7 +27,7 @@ class GenericFormField extends StatelessWidget {
       cursorColor: AppColors.main,
       style: TextStyle(
           color: AppColors.main,
-          fontSize: 20,
+          fontSize: 18,
           decoration: null,
           decorationStyle: null,
           textBaseline: null),

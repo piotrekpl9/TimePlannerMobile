@@ -18,12 +18,17 @@ import 'package:time_planner_mobile/presentation/group/group_screen.dart';
 import 'package:time_planner_mobile/presentation/profile/bloc/user_profile_bloc.dart';
 import 'package:time_planner_mobile/presentation/profile/user_profile_screen.dart';
 import 'package:time_planner_mobile/presentation/schedule/bloc/calendar_bloc.dart';
+import 'package:time_planner_mobile/presentation/schedule/create_task_screen.dart';
 import 'package:time_planner_mobile/presentation/schedule/schedule_screen.dart';
 import 'package:time_planner_mobile/presentation/start/start_screen.dart';
 import 'package:time_planner_mobile/presentation/signup/bloc/sign_up_bloc.dart';
 import 'package:time_planner_mobile/presentation/signup/sign_up_screen.dart';
 
 GoRouter setupRouter() {
+  var calendarBloc = CalendarBloc(
+    taskService: diContainer.get<TaskServiceAbstraction>(),
+    taskRepository: diContainer.get<TaskRepositoryAbstraction>(),
+  )..add(UserEnteredScreenEvent());
   return GoRouter(
     restorationScopeId: 'router',
     routes: [
@@ -37,6 +42,13 @@ GoRouter setupRouter() {
           }
           return null;
         },
+      ),
+      GoRoute(
+        path: CreateTaskScreen.path,
+        builder: (context, state) => BlocProvider.value(
+          value: calendarBloc,
+          child: const CreateTaskScreen(),
+        ),
       ),
       GoRoute(
         path: UserProfileScreen.path,
@@ -89,11 +101,8 @@ GoRouter setupRouter() {
         pageBuilder: (context, state) {
           return CustomTransitionPage(
             key: state.pageKey,
-            child: BlocProvider(
-              create: (context) => CalendarBloc(
-                taskService: diContainer.get<TaskServiceAbstraction>(),
-                taskRepository: diContainer.get<TaskRepositoryAbstraction>(),
-              )..add(UserEnteredScreenEvent()),
+            child: BlocProvider.value(
+              value: calendarBloc,
               child: const ScheduleScreen(),
             ),
             transitionsBuilder:

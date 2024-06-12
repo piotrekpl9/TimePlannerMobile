@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:time_planner_mobile/presentation/common/app_colors.dart';
 import 'package:time_planner_mobile/presentation/common/widgets/generic_form_field.dart';
+import 'package:time_planner_mobile/presentation/common/widgets/main_button.dart';
 import 'package:time_planner_mobile/presentation/group/views/group_view.dart';
 import 'package:time_planner_mobile/presentation/group/views/invitations_view.dart';
 import 'package:time_planner_mobile/presentation/profile/bloc/user_profile_bloc.dart';
@@ -28,113 +29,113 @@ class _GroupScreenState extends State<GroupScreen> {
             image: AssetImage("assets/background2.png"), fit: BoxFit.cover),
       ),
       child: Scaffold(
-          resizeToAvoidBottomInset: false,
-          appBar: AppBar(
-            systemOverlayStyle: const SystemUiOverlayStyle(
-                statusBarColor: Color.fromARGB(162, 0, 53, 94)),
-            centerTitle: true,
-            backgroundColor: Colors.transparent,
-            title: Text(
-              "User Profile",
-              style: TextStyle(color: AppColors.main),
-            ),
-          ),
+        resizeToAvoidBottomInset: false,
+        appBar: AppBar(
+          systemOverlayStyle: const SystemUiOverlayStyle(
+              statusBarColor: Color.fromARGB(162, 0, 53, 94)),
+          centerTitle: true,
           backgroundColor: Colors.transparent,
-          bottomNavigationBar: BottomAppBar(
-            padding: const EdgeInsets.all(0),
-            color: Colors.transparent,
-            child: LayoutBuilder(builder: (context, constraints) {
-              return Stack(
-                alignment: AlignmentDirectional.bottomCenter,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(5),
-                    color: AppColors.main,
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: <Widget>[
-                        Expanded(
-                          child: IconButton(
-                            icon: const Icon(
-                              Icons.person,
-                              color: Colors.black,
-                            ),
-                            onPressed: () {
-                              context.go(UserProfileScreen.path);
-                            },
-                          ),
-                        ),
-                        Expanded(
-                          child: IconButton(
-                            icon: const Icon(
-                              Icons.calendar_month,
-                              color: Colors.black,
-                            ),
-                            onPressed: () {
-                              context.go(ScheduleScreen.path);
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  groupView
-                      ? Align(
-                          alignment: Alignment.bottomCenter,
-                          child: Padding(
-                            padding: const EdgeInsets.only(bottom: 10.0),
-                            child: ElevatedButton(
-                              onPressed: () {
-                                setState(() {
-                                  groupView = false;
-                                });
-                              },
-                              style: ElevatedButton.styleFrom(
-                                  backgroundColor: AppColors.main,
-                                  shape: const CircleBorder(
-                                      side: BorderSide(
-                                    color: Colors.black,
-                                  )),
-                                  fixedSize: Size(constraints.maxHeight,
-                                      constraints.maxHeight)),
-                              child: const Icon(
-                                Icons.person_add,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ),
-                        )
-                      : Align(
-                          alignment: Alignment.bottomCenter,
-                          child: Padding(
-                            padding: const EdgeInsets.only(bottom: 10.0),
-                            child: ElevatedButton(
-                              onPressed: () {
-                                setState(() {
-                                  groupView = true;
-                                });
-                              },
-                              style: ElevatedButton.styleFrom(
-                                  backgroundColor: AppColors.main,
-                                  shape: const CircleBorder(
-                                      side: BorderSide(
-                                    color: Colors.black,
-                                  )),
-                                  fixedSize: Size(constraints.maxHeight,
-                                      constraints.maxHeight)),
-                              child: const Icon(
-                                Icons.people,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ),
-                        ),
-                ],
-              );
-            }),
+          title: Text(
+            "User Group",
+            style: TextStyle(color: AppColors.main),
           ),
-          body: groupView ? const GroupView() : const InvitationsView()),
+        ),
+        backgroundColor: Colors.transparent,
+        bottomNavigationBar: BottomAppBar(
+          padding: const EdgeInsets.all(0),
+          color: Colors.transparent,
+          child: LayoutBuilder(builder: (context, constraints) {
+            return Stack(
+              alignment: AlignmentDirectional.bottomCenter,
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(5),
+                  color: AppColors.main,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: <Widget>[
+                      Expanded(
+                        child: IconButton(
+                          icon: const Icon(
+                            Icons.person,
+                            color: Colors.black,
+                          ),
+                          onPressed: () {
+                            context.go(
+                              UserProfileScreen.path,
+                            );
+                          },
+                        ),
+                      ),
+                      Expanded(
+                        child: IconButton(
+                          icon: const Icon(
+                            Icons.calendar_month,
+                            color: Colors.black,
+                          ),
+                          onPressed: () {
+                            context.go(
+                              ScheduleScreen.path,
+                            );
+                          },
+                        ),
+                      ),
+                      Expanded(
+                        child: IconButton(
+                          icon: const Icon(
+                            Icons.people,
+                            color: Color(0xFF9EB6C2),
+                          ),
+                          onPressed: () {},
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            );
+          }),
+        ),
+        body: Padding(
+          padding: const EdgeInsets.all(30.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              groupView
+                  ? Expanded(child: const GroupView())
+                  : Expanded(child: const InvitationsView()),
+              SizedBox(
+                height: 30,
+              ),
+              groupView
+                  ? MainButton(
+                      onPressed: () {
+                        setState(() {
+                          groupView = false;
+                        });
+                      },
+                      child: Text(
+                        "View invitations",
+                        style: TextStyle(color: AppColors.secondary),
+                      ),
+                    )
+                  : MainButton(
+                      onPressed: () {
+                        setState(() {
+                          groupView = true;
+                        });
+                      },
+                      child: Text(
+                        "View group",
+                        style: TextStyle(color: AppColors.secondary),
+                      ),
+                    ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

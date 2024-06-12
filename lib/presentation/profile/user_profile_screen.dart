@@ -59,13 +59,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                       children: <Widget>[
                         Expanded(
                           child: IconButton(
-                            icon: const Icon(
-                              Icons.people,
-                              color: Colors.black,
-                            ),
-                            onPressed: () {
-                              context.go(GroupScreen.path);
-                            },
+                            icon: const Icon(Icons.person,
+                                color: Color(0xFF9EB6C2)),
+                            onPressed: () {},
                           ),
                         ),
                         Expanded(
@@ -75,42 +71,100 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                               color: Colors.black,
                             ),
                             onPressed: () {
-                              context.go(ScheduleScreen.path);
+                              context.go(
+                                ScheduleScreen.path,
+                              );
+                            },
+                          ),
+                        ),
+                        Expanded(
+                          child: IconButton(
+                            icon: const Icon(
+                              Icons.people,
+                              color: Colors.black,
+                            ),
+                            onPressed: () {
+                              context.go(
+                                GroupScreen.path,
+                              );
                             },
                           ),
                         ),
                       ],
                     ),
                   ),
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Padding(
-                      padding: const EdgeInsets.only(bottom: 10.0),
-                      child: ElevatedButton(
-                        onPressed: () {
-                          context
-                              .read<AuthenticationBloc>()
-                              .add(SignOutButtonPressed());
-                        },
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors.main,
-                            shape: const CircleBorder(
-                                side: BorderSide(
-                              color: Colors.black,
-                            )),
-                            fixedSize: Size(
-                                constraints.maxHeight, constraints.maxHeight)),
-                        child: const Icon(
-                          Icons.logout,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ),
-                  ),
                 ],
               );
             }),
           ),
+          //  BottomAppBar(
+          //   padding: const EdgeInsets.all(0),
+          //   color: Colors.transparent,
+          //   child: LayoutBuilder(builder: (context, constraints) {
+          //     return Stack(
+          //       alignment: AlignmentDirectional.bottomCenter,
+          //       children: [
+          //         Container(
+          //           padding: const EdgeInsets.all(5),
+          //           color: AppColors.main,
+          //           child: Row(
+          //             mainAxisSize: MainAxisSize.max,
+          //             mainAxisAlignment: MainAxisAlignment.spaceAround,
+          //             children: <Widget>[
+          //               Expanded(
+          //                 child: IconButton(
+          //                   icon: const Icon(
+          //                     Icons.person,
+          //                     color: Colors.black,
+          //                   ),
+          //                   onPressed: () {
+          //                     context.go(GroupScreen.path);
+          //                   },
+          //                 ),
+          //               ),
+          //               Expanded(
+          //                 child: IconButton(
+          //                   icon: const Icon(
+          //                     Icons.calendar_month,
+          //                     color: Colors.black,
+          //                   ),
+          //                   onPressed: () {
+          //                     context.go(ScheduleScreen.path);
+          //                   },
+          //                 ),
+          //               ),
+          //             ],
+          //           ),
+          //         ),
+          //         Align(
+          //           alignment: Alignment.bottomCenter,
+          //           child: Padding(
+          //             padding: const EdgeInsets.only(bottom: 10.0),
+          //             child: ElevatedButton(
+          //               onPressed: () {
+          //                 context
+          //                     .read<AuthenticationBloc>()
+          //                     .add(SignOutButtonPressed());
+          //               },
+          //               style: ElevatedButton.styleFrom(
+          //                   backgroundColor: AppColors.main,
+          //                   shape: const CircleBorder(
+          //                       side: BorderSide(
+          //                     color: Colors.black,
+          //                   )),
+          //                   fixedSize: Size(
+          //                       constraints.maxHeight, constraints.maxHeight)),
+          //               child: const Icon(
+          //                 Icons.logout,
+          //                 color: Colors.black,
+          //               ),
+          //             ),
+          //           ),
+          //         ),
+          //       ],
+          //     );
+          //   }),
+          // ),
           body: BlocBuilder<UserProfileBloc, UserProfileState>(
             bloc: context.read<UserProfileBloc>(),
             builder: (context, state) {
@@ -179,6 +233,16 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                 ),
                               );
                             },
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          MainButton(
+                            child: Text(
+                              "Sign out",
+                              style: TextStyle(color: AppColors.secondary),
+                            ),
+                            onPressed: () {},
                           ),
                         ],
                       ),
