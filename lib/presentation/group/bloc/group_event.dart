@@ -22,3 +22,9 @@ class UserRejectedInvitationEvent extends GroupEvent {
 }
 
 class LeaveGroupButtonPressedEvent extends GroupEvent {}
+
+class InviteUserButtonPressedEvent extends GroupEvent {
+  final String email;
+
+  const InviteUserButtonPressedEvent({required this.email});
+}

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:time_planner_mobile/presentation/common/app_colors.dart';
+import 'package:time_planner_mobile/presentation/common/widgets/generic_form_field.dart';
 import 'package:time_planner_mobile/presentation/common/widgets/main_button.dart';
 import 'package:time_planner_mobile/presentation/group/bloc/group_bloc.dart';
+import 'package:time_planner_mobile/presentation/group/widget/invite_user_to_group.dart';
 
 class GroupView extends StatefulWidget {
   const GroupView({super.key});
@@ -150,6 +152,30 @@ class _GroupViewState extends State<GroupView> {
                                   ),
                                 ),
                               ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              state.group != null
+                                  ? MainButton(
+                                      child: Text(
+                                        "Invite to group",
+                                        style: TextStyle(
+                                            color: AppColors.secondary),
+                                      ),
+                                      onPressed: () {
+                                        showAdaptiveDialog(
+                                          context: context,
+                                          builder: (ctx) {
+                                            return BlocProvider.value(
+                                                value:
+                                                    context.read<GroupBloc>(),
+                                                child:
+                                                    const InviteUserDialog());
+                                          },
+                                        );
+                                      },
+                                    )
+                                  : const SizedBox(),
                               const SizedBox(
                                 height: 20,
                               ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:time_planner_mobile/domain/task/model/create_task_dto.dart';
@@ -31,6 +32,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
   DateTime? _endDate;
   @override
   Widget build(BuildContext context) {
+    var calendarBloc = context.read<CalendarBloc>();
     return Container(
       decoration: const BoxDecoration(
         image: DecorationImage(
@@ -314,6 +316,18 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                                 activeColor: AppColors.main,
                                 value: groupTask,
                                 onChanged: (value) {
+                                  if (calendarBloc.state.group == null) {
+                                    Fluttertoast.showToast(
+                                        msg:
+                                            "User is not a member of any group",
+                                        toastLength: Toast.LENGTH_SHORT,
+                                        gravity: ToastGravity.BOTTOM,
+                                        timeInSecForIosWeb: 1,
+                                        backgroundColor: Colors.red,
+                                        textColor: Colors.white,
+                                        fontSize: 16.0);
+                                    return;
+                                  }
                                   setState(() {
                                     groupTask = !groupTask;
                                   });
