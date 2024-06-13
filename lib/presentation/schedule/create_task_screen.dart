@@ -84,11 +84,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                             Icons.calendar_month,
                             color: Color(0xFF9EB6C2),
                           ),
-                          onPressed: () {
-                            context.go(
-                              UserProfileScreen.path,
-                            );
-                          },
+                          onPressed: () {},
                         ),
                       ),
                       Expanded(

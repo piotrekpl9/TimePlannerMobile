@@ -36,7 +36,7 @@ class _InviteUserDialogState extends State<InviteUserDialog> {
               children: [
                 Icon(
                   size: 54,
-                  Icons.edit_note,
+                  Icons.mail_outline,
                   color: AppColors.main,
                 ),
                 const SizedBox(

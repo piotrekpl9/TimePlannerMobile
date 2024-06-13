@@ -242,7 +242,11 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                               "Sign out",
                               style: TextStyle(color: AppColors.secondary),
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              context
+                                  .read<AuthenticationBloc>()
+                                  .add(SignOutButtonPressed());
+                            },
                           ),
                         ],
                       ),

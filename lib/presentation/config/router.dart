@@ -15,6 +15,7 @@ import 'package:time_planner_mobile/presentation/authentication/bloc/authenticat
 import 'package:time_planner_mobile/presentation/authentication/sign_in_screen.dart';
 import 'package:time_planner_mobile/presentation/group/bloc/group_bloc.dart';
 import 'package:time_planner_mobile/presentation/group/group_screen.dart';
+import 'package:time_planner_mobile/presentation/group/invitations_screen.dart';
 import 'package:time_planner_mobile/presentation/profile/bloc/user_profile_bloc.dart';
 import 'package:time_planner_mobile/presentation/profile/user_profile_screen.dart';
 import 'package:time_planner_mobile/presentation/schedule/bloc/calendar_bloc.dart';
@@ -29,7 +30,7 @@ GoRouter setupRouter() {
     groupRepository: diContainer.get<GroupRepositoryAbstraction>(),
     taskService: diContainer.get<TaskServiceAbstraction>(),
     taskRepository: diContainer.get<TaskRepositoryAbstraction>(),
-  )..add(UserEnteredScreenEvent());
+  );
   return GoRouter(
     restorationScopeId: 'router',
     routes: [
@@ -79,11 +80,35 @@ GoRouter setupRouter() {
             key: state.pageKey,
             child: BlocProvider(
               create: (context) => GroupBloc(
+                  userRepository: diContainer.get<UserRepositoryAbstraction>(),
                   groupService: diContainer.get<GroupServiceAbstraction>(),
                   groupRepository:
                       diContainer.get<GroupRepositoryAbstraction>())
                 ..add(UserEnteredGroupScreenEvent()),
               child: const GroupScreen(),
+            ),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
+              // Change the opacity of the screen using a Curve based on the the animation's
+              // value
+              return child;
+            },
+          );
+        },
+      ),
+      GoRoute(
+        path: InvitationsScreen.path,
+        pageBuilder: (context, state) {
+          return CustomTransitionPage(
+            key: state.pageKey,
+            child: BlocProvider(
+              create: (context) => GroupBloc(
+                  userRepository: diContainer.get<UserRepositoryAbstraction>(),
+                  groupService: diContainer.get<GroupServiceAbstraction>(),
+                  groupRepository:
+                      diContainer.get<GroupRepositoryAbstraction>())
+                ..add(UserEnteredGroupScreenEvent()),
+              child: const InvitationsScreen(),
             ),
             transitionsBuilder:
                 (context, animation, secondaryAnimation, child) {
@@ -104,7 +129,7 @@ GoRouter setupRouter() {
           return CustomTransitionPage(
             key: state.pageKey,
             child: BlocProvider.value(
-              value: calendarBloc,
+              value: calendarBloc..add(UserEnteredScreenEvent()),
               child: const ScheduleScreen(),
             ),
             transitionsBuilder:

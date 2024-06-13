@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:time_planner_mobile/domain/group/member_role.dart';
 import 'package:time_planner_mobile/presentation/common/app_colors.dart';
-import 'package:time_planner_mobile/presentation/common/widgets/generic_form_field.dart';
 import 'package:time_planner_mobile/presentation/common/widgets/main_button.dart';
 import 'package:time_planner_mobile/presentation/group/bloc/group_bloc.dart';
-import 'package:time_planner_mobile/presentation/group/widget/invite_user_to_group.dart';
+import 'package:time_planner_mobile/presentation/group/invitations_screen.dart';
+import 'package:time_planner_mobile/presentation/group/widget/create_group_dialog.dart';
+import 'package:time_planner_mobile/presentation/group/widget/invite_user_to_group_dialog.dart';
 
 class GroupView extends StatefulWidget {
   const GroupView({super.key});
@@ -14,6 +17,7 @@ class GroupView extends StatefulWidget {
 }
 
 class _GroupViewState extends State<GroupView> {
+  bool groupAdmin = false;
   final TextEditingController _groupController = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -24,6 +28,14 @@ class _GroupViewState extends State<GroupView> {
           final group = state.group;
           if (group != null) {
             _groupController.text = group.name;
+            if (state.user != null) {
+              var userMember = group.members.firstWhere(
+                (element) {
+                  return element.email == state.user!.email;
+                },
+              );
+              groupAdmin = userMember.role == MemberRole.admin;
+            }
           } else {
             _groupController.text = "";
           }
@@ -133,17 +145,41 @@ class _GroupViewState extends State<GroupView> {
                                         if (state.group != null)
                                           ...state.group!.members.map(
                                             (e) {
-                                              return Padding(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        vertical: 5.0),
-                                                child: Text(
-                                                  "${e.name} ${e.surname}",
-                                                  style: TextStyle(
-                                                      color: AppColors.main,
-                                                      overflow: TextOverflow
-                                                          .ellipsis),
-                                                ),
+                                              return Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Text(
+                                                    "${e.name} ${e.surname}",
+                                                    style: TextStyle(
+                                                        color: AppColors.main,
+                                                        overflow: TextOverflow
+                                                            .ellipsis),
+                                                  ),
+                                                  groupAdmin &&
+                                                          e.email !=
+                                                              state.user?.email
+                                                      ? IconButton(
+                                                          onPressed: () {
+                                                            context
+                                                                .read<
+                                                                    GroupBloc>()
+                                                                .add(DeleteMemberButtonPressed(
+                                                                    memberUUID:
+                                                                        e.uuid));
+                                                          },
+                                                          icon: const Icon(
+                                                            Icons.close,
+                                                            color:
+                                                                Color.fromARGB(
+                                                                    255,
+                                                                    255,
+                                                                    117,
+                                                                    107),
+                                                          ))
+                                                      : const SizedBox(),
+                                                ],
                                               );
                                             },
                                           ),
@@ -155,49 +191,97 @@ class _GroupViewState extends State<GroupView> {
                               const SizedBox(
                                 height: 20,
                               ),
-                              state.group != null
-                                  ? MainButton(
-                                      child: Text(
-                                        "Invite to group",
-                                        style: TextStyle(
-                                            color: AppColors.secondary),
-                                      ),
-                                      onPressed: () {
-                                        showAdaptiveDialog(
-                                          context: context,
-                                          builder: (ctx) {
-                                            return BlocProvider.value(
-                                                value:
-                                                    context.read<GroupBloc>(),
-                                                child:
-                                                    const InviteUserDialog());
-                                          },
-                                        );
-                                      },
-                                    )
-                                  : const SizedBox(),
-                              const SizedBox(
-                                height: 20,
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  state.group != null
+                                      ? Expanded(
+                                          child: MainButton(
+                                            child: Text(
+                                              "Invite",
+                                              style: TextStyle(
+                                                  color: AppColors.secondary),
+                                            ),
+                                            onPressed: () {
+                                              showAdaptiveDialog(
+                                                context: context,
+                                                builder: (ctx) {
+                                                  return BlocProvider.value(
+                                                      value: context
+                                                          .read<GroupBloc>(),
+                                                      child:
+                                                          const InviteUserDialog());
+                                                },
+                                              );
+                                            },
+                                          ),
+                                        )
+                                      : const SizedBox(),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  state.group != null
+                                      ? Expanded(
+                                          child: MainButton(
+                                            child: Text(
+                                              "Leave",
+                                              style: TextStyle(
+                                                  color: AppColors.secondary),
+                                            ),
+                                            onPressed: () {
+                                              context.read<GroupBloc>().add(
+                                                  LeaveGroupButtonPressedEvent());
+                                            },
+                                          ),
+                                        )
+                                      : const SizedBox(),
+                                ],
                               ),
-                              state.group != null
-                                  ? MainButton(
-                                      child: Text(
-                                        "Leave group",
-                                        style: TextStyle(
-                                            color: AppColors.secondary),
-                                      ),
-                                      onPressed: () {
-                                        context.read<GroupBloc>().add(
-                                            LeaveGroupButtonPressedEvent());
-                                      },
-                                    )
-                                  : const SizedBox(),
                             ],
                           )
-                        : Text(
-                            "You have to be a group member to see content here",
-                            style: TextStyle(color: AppColors.main),
-                            textAlign: TextAlign.center,
+                        : Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              Text(
+                                "You have to be a group member to see content here",
+                                style: TextStyle(color: AppColors.main),
+                                textAlign: TextAlign.center,
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              MainButton(
+                                onPressed: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (ctx) {
+                                      return BlocProvider.value(
+                                        value: context.read<GroupBloc>(),
+                                        child: CreateGroupDialog(),
+                                      );
+                                    },
+                                  );
+                                },
+                                child: Text(
+                                  "Create group",
+                                  style: TextStyle(color: AppColors.secondary),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              MainButton(
+                                onPressed: () {
+                                  context.push(InvitationsScreen.path);
+                                },
+                                child: Text(
+                                  "View invitations",
+                                  style: TextStyle(color: AppColors.secondary),
+                                ),
+                              ),
+                            ],
                           ),
                   ),
                 ),

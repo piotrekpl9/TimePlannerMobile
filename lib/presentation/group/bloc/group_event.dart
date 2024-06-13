@@ -28,3 +28,15 @@ class InviteUserButtonPressedEvent extends GroupEvent {
 
   const InviteUserButtonPressedEvent({required this.email});
 }
+
+class DeleteMemberButtonPressed extends GroupEvent {
+  final String memberUUID;
+
+  const DeleteMemberButtonPressed({required this.memberUUID});
+}
+
+class CreateGroupButtonPressed extends GroupEvent {
+  final String groupName;
+
+  const CreateGroupButtonPressed({required this.groupName});
+}

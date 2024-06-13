@@ -35,6 +35,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
             image: AssetImage("assets/background2.png"), fit: BoxFit.cover),
       ),
       child: Scaffold(
+        extendBodyBehindAppBar: true,
         appBar: AppBar(
           systemOverlayStyle: const SystemUiOverlayStyle(
               statusBarColor: Color.fromARGB(162, 0, 53, 94)),
@@ -47,61 +48,60 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
         ),
         backgroundColor: const Color.fromARGB(37, 0, 0, 0),
         extendBody: true,
-        bottomNavigationBar: BottomAppBar(
-          padding: const EdgeInsets.all(0),
-          color: Colors.transparent,
-          child: LayoutBuilder(builder: (context, constraints) {
-            return Stack(
-              alignment: AlignmentDirectional.bottomCenter,
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(5),
-                  color: AppColors.main,
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: <Widget>[
-                      Expanded(
-                        child: IconButton(
-                          icon: const Icon(
-                            Icons.person,
-                            color: Colors.black,
-                          ),
-                          onPressed: () {
-                            context.go(
-                              UserProfileScreen.path,
-                            );
-                          },
+        bottomNavigationBar: SafeArea(
+          bottom: false,
+          child: BottomAppBar(
+            height: 60,
+            color: AppColors.main,
+            padding: const EdgeInsets.all(0),
+            child: LayoutBuilder(builder: (context, constraints) {
+              return Container(
+                padding: const EdgeInsets.all(5),
+                color: AppColors.main,
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    Expanded(
+                      child: IconButton(
+                        icon: const Icon(
+                          Icons.person,
+                          color: Colors.black,
                         ),
+                        onPressed: () {
+                          context.go(
+                            UserProfileScreen.path,
+                          );
+                        },
                       ),
-                      Expanded(
-                        child: IconButton(
-                          icon: const Icon(
-                            Icons.calendar_month,
-                            color: Color(0xFF9EB6C2),
-                          ),
-                          onPressed: () {},
+                    ),
+                    Expanded(
+                      child: IconButton(
+                        icon: const Icon(
+                          Icons.calendar_month,
+                          color: Color(0xFF9EB6C2),
                         ),
+                        onPressed: () {},
                       ),
-                      Expanded(
-                        child: IconButton(
-                          icon: const Icon(
-                            Icons.people,
-                            color: Colors.black,
-                          ),
-                          onPressed: () {
-                            context.go(
-                              GroupScreen.path,
-                            );
-                          },
+                    ),
+                    Expanded(
+                      child: IconButton(
+                        icon: const Icon(
+                          Icons.people,
+                          color: Colors.black,
                         ),
+                        onPressed: () {
+                          context.go(
+                            GroupScreen.path,
+                          );
+                        },
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              ],
-            );
-          }),
+              );
+            }),
+          ),
         ),
         resizeToAvoidBottomInset: false,
         body: BlocConsumer<CalendarBloc, CalendarState>(
