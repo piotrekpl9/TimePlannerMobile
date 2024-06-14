@@ -76,6 +76,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                           onEventTap: (events, date) {
                             var task = events.first.event as Task;
                             showAdaptiveDialog(
+                              barrierDismissible: true,
                               context: context,
                               builder: (ctx) => BlocProvider.value(
                                 value: context.read<CalendarBloc>(),

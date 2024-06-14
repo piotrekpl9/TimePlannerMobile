@@ -96,6 +96,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         ),
                         onPressed: () {
                           showAdaptiveDialog(
+                            barrierDismissible: true,
                             context: context,
                             builder: (ctx) => BlocProvider.value(
                               value: context.read<UserProfileBloc>(),
