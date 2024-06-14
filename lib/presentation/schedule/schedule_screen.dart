@@ -4,7 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:time_planner_mobile/domain/task/entity/task.dart';
 import 'package:time_planner_mobile/presentation/common/widgets/main_floating_action_button.dart';
+import 'package:time_planner_mobile/presentation/common/widgets/scaffold/bottom_navigation_bar/main_bottom_navigation_bar.dart';
 import 'package:time_planner_mobile/presentation/common/widgets/scaffold/bottom_navigation_bar/navigation_bar_page.dart';
+import 'package:time_planner_mobile/presentation/common/widgets/scaffold/main_app_bar.dart';
 import 'package:time_planner_mobile/presentation/common/widgets/scaffold/main_scaffold.dart';
 import 'package:time_planner_mobile/presentation/schedule/bloc/calendar_bloc.dart';
 import 'package:time_planner_mobile/presentation/schedule/widget/add_task_button.dart';
@@ -30,7 +32,15 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
   @override
   Widget build(BuildContext context) {
     return MainScaffold(
-      currentScreenCategory: BottomNavigationBarPage.schedule,
+      appBar: MainAppBar(
+        title: Text(
+          "Schedule",
+          style: TextStyle(color: AppColors.main),
+        ),
+      ),
+      bottomNavigationBar: const MainBottomNavigationBar(
+        activeScreen: BottomNavigationBarPage.schedule,
+      ),
       body: BlocConsumer<CalendarBloc, CalendarState>(
         bloc: context.read<CalendarBloc>(),
         listener: (context, state) {
