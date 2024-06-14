@@ -9,7 +9,7 @@ import 'package:time_planner_mobile/presentation/schedule/schedule_screen.dart';
 import 'package:time_planner_mobile/presentation/common/app_colors.dart';
 import 'package:time_planner_mobile/presentation/common/widgets/generic_form_field.dart';
 import 'package:time_planner_mobile/presentation/common/widgets/main_button.dart';
-import 'package:time_planner_mobile/presentation/common/widgets/start_scaffold.dart';
+import 'package:time_planner_mobile/presentation/common/widgets/scaffold/start_scaffold.dart';
 
 class SignInScreen extends StatefulWidget {
   static String path = "/signIn";

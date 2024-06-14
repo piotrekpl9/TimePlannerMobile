@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:time_planner_mobile/presentation/common/app_colors.dart';
 import 'package:time_planner_mobile/presentation/common/widgets/main_button.dart';
 import 'package:time_planner_mobile/presentation/group/bloc/group_bloc.dart';
+import 'package:time_planner_mobile/presentation/group/widget/invitation_row.dart';
 
 class InvitationsView extends StatefulWidget {
   const InvitationsView({super.key});
@@ -53,37 +54,7 @@ class _InvitationsViewState extends State<InvitationsView> {
                       : const SizedBox(),
                   ...state.invitations.map(
                     (e) {
-                      return Row(
-                        children: [
-                          Text(
-                            "${e.groupName} - ${e.creator.email}",
-                            style: TextStyle(
-                                color: AppColors.main,
-                                overflow: TextOverflow.ellipsis),
-                          ),
-                          const Spacer(),
-                          IconButton(
-                            icon: Icon(
-                              Icons.done,
-                              color: AppColors.main,
-                            ),
-                            onPressed: () {
-                              context.read<GroupBloc>().add(
-                                  UserAcceptedInvitationEvent(invitation: e));
-                            },
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          IconButton(
-                            icon: Icon(Icons.delete, color: AppColors.main),
-                            onPressed: () {
-                              context.read<GroupBloc>().add(
-                                  UserRejectedInvitationEvent(invitation: e));
-                            },
-                          ),
-                        ],
-                      );
+                      return InvitationRow(invitation: e);
                     },
                   ),
                 ],

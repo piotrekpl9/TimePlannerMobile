@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:time_planner_mobile/infrastructure/authentication/abstraction/authentication_service_abstraction.dart';
 import 'package:time_planner_mobile/infrastructure/authentication/model/sign_up_dto.dart';
-import 'package:time_planner_mobile/presentation/signup/signup_data.dart';
+import 'package:time_planner_mobile/presentation/signup/model/signup_data.dart';
 
 part 'sign_up_event.dart';
 part 'sign_up_state.dart';

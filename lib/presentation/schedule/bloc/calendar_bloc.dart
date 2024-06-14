@@ -44,8 +44,7 @@ class CalendarBloc extends Bloc<CalendarEvent, CalendarState> {
         ? await taskService.createTaskForGroup(event.createTaskDto)
         : await taskService.createTaskForUser(event.createTaskDto);
     if (task != null) {
-      var tasks = state.tasks..add(task);
-      emitter(state.copyWith(status: CalendarStatus.idle, tasks: tasks));
+      add(UserEnteredScreenEvent());
     }
   }
 
