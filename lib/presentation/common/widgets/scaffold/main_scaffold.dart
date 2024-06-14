@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:time_planner_mobile/presentation/common/widgets/scaffold/main_app_bar.dart';
 
 class MainScaffold extends StatelessWidget {
   final Widget? bottomNavigationBar;

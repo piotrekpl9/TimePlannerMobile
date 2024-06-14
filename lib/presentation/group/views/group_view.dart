@@ -7,6 +7,8 @@ import 'package:time_planner_mobile/presentation/common/widgets/main_button.dart
 import 'package:time_planner_mobile/presentation/group/bloc/group_bloc.dart';
 import 'package:time_planner_mobile/presentation/group/invitations_screen.dart';
 import 'package:time_planner_mobile/presentation/group/widget/create_group_dialog.dart';
+import 'package:time_planner_mobile/presentation/group/widget/group_form_field.dart';
+import 'package:time_planner_mobile/presentation/group/widget/group_member_row.dart';
 import 'package:time_planner_mobile/presentation/group/widget/invite_user_to_group_dialog.dart';
 
 class GroupView extends StatefulWidget {
@@ -68,37 +70,8 @@ class _GroupViewState extends State<GroupView> {
                               const SizedBox(
                                 height: 30,
                               ),
-                              TextFormField(
-                                cursorColor: AppColors.main,
-                                style: TextStyle(
-                                    color: AppColors.main,
-                                    fontSize: 20,
-                                    decoration: null,
-                                    decorationStyle: null,
-                                    textBaseline: null),
-                                decoration: InputDecoration(
-                                    enabled: false,
-                                    hintText: "Name",
-                                    hintStyle: TextStyle(color: AppColors.main),
-                                    contentPadding: const EdgeInsets.all(15),
-                                    disabledBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(10),
-                                        borderSide: BorderSide(
-                                            color: AppColors.main, width: 3)),
-                                    enabledBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(10),
-                                        borderSide: BorderSide(
-                                            color: AppColors.main, width: 3)),
-                                    focusedBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(10),
-                                        borderSide: BorderSide(
-                                            color: AppColors.main, width: 3)),
-                                    border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(10),
-                                        borderSide: BorderSide(
-                                            color: AppColors.main, width: 3))),
-                                controller: _groupController,
-                              ),
+                              GroupFormField(
+                                  hint: "Name", controller: _groupController),
                               const SizedBox(
                                 height: 20,
                               ),
@@ -145,41 +118,11 @@ class _GroupViewState extends State<GroupView> {
                                         if (state.group != null)
                                           ...state.group!.members.map(
                                             (e) {
-                                              return Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  Text(
-                                                    "${e.name} ${e.surname}",
-                                                    style: TextStyle(
-                                                        color: AppColors.main,
-                                                        overflow: TextOverflow
-                                                            .ellipsis),
-                                                  ),
-                                                  groupAdmin &&
-                                                          e.email !=
-                                                              state.user?.email
-                                                      ? IconButton(
-                                                          onPressed: () {
-                                                            context
-                                                                .read<
-                                                                    GroupBloc>()
-                                                                .add(DeleteMemberButtonPressed(
-                                                                    memberUUID:
-                                                                        e.uuid));
-                                                          },
-                                                          icon: const Icon(
-                                                            Icons.close,
-                                                            color:
-                                                                Color.fromARGB(
-                                                                    255,
-                                                                    255,
-                                                                    117,
-                                                                    107),
-                                                          ))
-                                                      : const SizedBox(),
-                                                ],
+                                              return GroupMemberRow(
+                                                member: e,
+                                                showOptions: groupAdmin &&
+                                                    e.email !=
+                                                        state.user?.email,
                                               );
                                             },
                                           ),
@@ -249,7 +192,7 @@ class _GroupViewState extends State<GroupView> {
                                 style: TextStyle(color: AppColors.main),
                                 textAlign: TextAlign.center,
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 20,
                               ),
                               MainButton(
@@ -259,7 +202,7 @@ class _GroupViewState extends State<GroupView> {
                                     builder: (ctx) {
                                       return BlocProvider.value(
                                         value: context.read<GroupBloc>(),
-                                        child: CreateGroupDialog(),
+                                        child: const CreateGroupDialog(),
                                       );
                                     },
                                   );
@@ -269,7 +212,7 @@ class _GroupViewState extends State<GroupView> {
                                   style: TextStyle(color: AppColors.secondary),
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 20,
                               ),
                               MainButton(

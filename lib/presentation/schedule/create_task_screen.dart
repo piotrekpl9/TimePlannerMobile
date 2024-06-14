@@ -12,8 +12,6 @@ import 'package:time_planner_mobile/presentation/common/widgets/main_button.dart
 import 'package:time_planner_mobile/presentation/common/widgets/scaffold/bottom_navigation_bar/main_bottom_navigation_bar.dart';
 import 'package:time_planner_mobile/presentation/common/widgets/scaffold/bottom_navigation_bar/navigation_bar_page.dart';
 import 'package:time_planner_mobile/presentation/common/widgets/scaffold/main_scaffold.dart';
-import 'package:time_planner_mobile/presentation/group/group_screen.dart';
-import 'package:time_planner_mobile/presentation/profile/user_profile_screen.dart';
 import 'package:time_planner_mobile/presentation/schedule/bloc/calendar_bloc.dart';
 
 class CreateTaskScreen extends StatefulWidget {

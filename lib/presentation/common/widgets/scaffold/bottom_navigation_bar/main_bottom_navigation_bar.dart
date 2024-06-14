@@ -4,6 +4,7 @@ import 'package:time_planner_mobile/presentation/common/app_colors.dart';
 import 'package:time_planner_mobile/presentation/common/widgets/scaffold/bottom_navigation_bar/navigation_bar_page.dart';
 import 'package:time_planner_mobile/presentation/group/group_screen.dart';
 import 'package:time_planner_mobile/presentation/profile/user_profile_screen.dart';
+import 'package:time_planner_mobile/presentation/schedule/schedule_screen.dart';
 
 class MainBottomNavigationBar extends StatelessWidget {
   final BottomNavigationBarPage activeScreen;
@@ -34,9 +35,11 @@ class MainBottomNavigationBar extends StatelessWidget {
                           : Colors.black,
                     ),
                     onPressed: () {
-                      context.go(
-                        UserProfileScreen.path,
-                      );
+                      if (activeScreen != BottomNavigationBarPage.user) {
+                        context.go(
+                          UserProfileScreen.path,
+                        );
+                      }
                     },
                   ),
                 ),
@@ -48,7 +51,11 @@ class MainBottomNavigationBar extends StatelessWidget {
                           ? const Color(0xFF9EB6C2)
                           : Colors.black,
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      if (activeScreen != BottomNavigationBarPage.schedule) {
+                        context.go(ScheduleScreen.path);
+                      }
+                    },
                   ),
                 ),
                 Expanded(
@@ -60,9 +67,11 @@ class MainBottomNavigationBar extends StatelessWidget {
                           : Colors.black,
                     ),
                     onPressed: () {
-                      context.go(
-                        GroupScreen.path,
-                      );
+                      if (activeScreen != BottomNavigationBarPage.group) {
+                        context.go(
+                          GroupScreen.path,
+                        );
+                      }
                     },
                   ),
                 ),
