@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
           title: 'TimePlanner Demo',
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
-            fontFamily: 'AvenirNext',
+            fontFamily: 'Montserrat',
             useMaterial3: true,
           ),
           routerConfig: router,

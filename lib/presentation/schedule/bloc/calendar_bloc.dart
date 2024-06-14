@@ -1,5 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:time_planner_mobile/domain/group/entity/group.dart';
+import 'package:time_planner_mobile/domain/group/group_repository_abstraction.dart';
 import 'package:time_planner_mobile/domain/task/model/create_task_dto.dart';
 import 'package:time_planner_mobile/domain/task/model/update_task_dto.dart';
 import 'package:time_planner_mobile/domain/task/task_repository_abstraction.dart';
@@ -13,8 +15,12 @@ part 'calendar_state.dart';
 class CalendarBloc extends Bloc<CalendarEvent, CalendarState> {
   final TaskRepositoryAbstraction taskRepository;
   final TaskServiceAbstraction taskService;
+  final GroupRepositoryAbstraction groupRepository;
 
-  CalendarBloc({required this.taskRepository, required this.taskService})
+  CalendarBloc(
+      {required this.taskRepository,
+      required this.taskService,
+      required this.groupRepository})
       : super(const CalendarState(status: CalendarStatus.init, tasks: [])) {
     on<UserEnteredScreenEvent>(_userEnteredScreen);
     on<AddTaskButtonTappedEvent>(_addTask);
@@ -26,8 +32,9 @@ class CalendarBloc extends Bloc<CalendarEvent, CalendarState> {
       UserEnteredScreenEvent event, Emitter<CalendarState> emitter) async {
     emitter(state.copyWith(status: CalendarStatus.loading));
     var tasks = await taskRepository.getUserTasks();
-
-    emitter(state.copyWith(status: CalendarStatus.idle, tasks: tasks));
+    var group = await groupRepository.getGroup();
+    emitter(state.copyWith(
+        status: CalendarStatus.idle, tasks: tasks, group: group));
   }
 
   void _addTask(

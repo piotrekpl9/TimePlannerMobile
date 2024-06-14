@@ -1,26 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:time_planner_mobile/presentation/common/app_colors.dart';
-import 'package:time_planner_mobile/presentation/common/widgets/generic_form_field.dart';
-import 'package:time_planner_mobile/presentation/common/widgets/main_button.dart';
-import 'package:time_planner_mobile/presentation/group/views/group_view.dart';
 import 'package:time_planner_mobile/presentation/group/views/invitations_view.dart';
-import 'package:time_planner_mobile/presentation/profile/bloc/user_profile_bloc.dart';
 import 'package:time_planner_mobile/presentation/profile/user_profile_screen.dart';
 import 'package:time_planner_mobile/presentation/schedule/schedule_screen.dart';
 
-class GroupScreen extends StatefulWidget {
-  static String path = "/group";
-  const GroupScreen({super.key});
+class InvitationsScreen extends StatefulWidget {
+  static String path = "/invitations";
+  const InvitationsScreen({super.key});
 
   @override
-  State<GroupScreen> createState() => _GroupScreenState();
+  State<InvitationsScreen> createState() => _InvitationsScreenState();
 }
 
-class _GroupScreenState extends State<GroupScreen> {
-  bool groupView = true;
+class _InvitationsScreenState extends State<InvitationsScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -97,12 +91,14 @@ class _GroupScreenState extends State<GroupScreen> {
             );
           }),
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(30.0),
+        body: const Padding(
+          padding: EdgeInsets.all(30.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisSize: MainAxisSize.min,
-            children: [Expanded(child: const GroupView())],
+            children: [
+              Expanded(child: InvitationsView()),
+            ],
           ),
         ),
       ),

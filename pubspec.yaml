@@ -41,6 +41,10 @@ flutter:
     - family: AvenirNext
       fonts:
         - asset: assets/AvenirNextCyr-Heavy.ttf
+        
+    - family: Montserrat
+      fonts:
+        - asset: assets/Montserrat-Bold.ttf
 
   uses-material-design: true
 
