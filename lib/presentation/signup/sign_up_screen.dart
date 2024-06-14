@@ -4,9 +4,9 @@ import 'package:go_router/go_router.dart';
 import 'package:time_planner_mobile/presentation/common/app_colors.dart';
 import 'package:time_planner_mobile/presentation/common/widgets/generic_form_field.dart';
 import 'package:time_planner_mobile/presentation/common/widgets/main_button.dart';
-import 'package:time_planner_mobile/presentation/common/widgets/start_scaffold.dart';
+import 'package:time_planner_mobile/presentation/common/widgets/scaffold/start_scaffold.dart';
 import 'package:time_planner_mobile/presentation/signup/bloc/sign_up_bloc.dart';
-import 'package:time_planner_mobile/presentation/signup/signup_data.dart';
+import 'package:time_planner_mobile/presentation/signup/model/signup_data.dart';
 
 class SignUpScreen extends StatefulWidget {
   static String path = "/signUp";
