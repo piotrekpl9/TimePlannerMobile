@@ -37,11 +37,14 @@ class GroupBloc extends Bloc<GroupEvent, GroupState> {
     var group = await _groupRepository.getGroup();
     var user = await _userRepository.getCurrentUser();
     var invitations = await _groupRepository.getPendingInvitation();
-
+    if (group.isLeft || invitations.isLeft) {
+      emitter(const GroupState(status: GroupBlocStatus.error, invitations: []));
+      return;
+    }
     emitter(GroupState(
         status: GroupBlocStatus.idle,
-        group: group,
-        invitations: invitations,
+        group: group.right,
+        invitations: invitations.right,
         user: user));
   }
 
@@ -49,7 +52,7 @@ class GroupBloc extends Bloc<GroupEvent, GroupState> {
       UserAcceptedInvitationEvent event, Emitter<GroupState> emitter) async {
     var result =
         await _groupRepository.acceptInvitation(event.invitation.invitationId);
-    if (result) {
+    if (result.isRight) {
       add(UserEnteredGroupScreenEvent());
     } else {
       emitter(state.copyWith(status: GroupBlocStatus.idle));
@@ -60,7 +63,7 @@ class GroupBloc extends Bloc<GroupEvent, GroupState> {
       UserRejectedInvitationEvent event, Emitter<GroupState> emitter) async {
     var result =
         await _groupRepository.rejectInvitation(event.invitation.invitationId);
-    if (result) {
+    if (result.isRight) {
       add(UserEnteredGroupScreenEvent());
     } else {
       emitter(state.copyWith(status: GroupBlocStatus.idle));
@@ -73,7 +76,7 @@ class GroupBloc extends Bloc<GroupEvent, GroupState> {
       return;
     }
     var result = await _groupRepository.leaveGroup(state.group!.groupId);
-    if (result) {
+    if (result.isRight) {
       add(UserEnteredGroupScreenEvent());
     } else {
       emitter(state.copyWith(status: GroupBlocStatus.idle));
@@ -87,7 +90,7 @@ class GroupBloc extends Bloc<GroupEvent, GroupState> {
     }
     var result = await _groupRepository.inviteUserByEmail(
         state.group!.groupId, event.email);
-    if (result) {
+    if (result.isRight) {
       add(UserEnteredGroupScreenEvent());
     } else {
       emitter(state.copyWith(status: GroupBlocStatus.idle));
@@ -101,7 +104,7 @@ class GroupBloc extends Bloc<GroupEvent, GroupState> {
     }
     var result = await _groupService.deleteGroupMember(
         state.group!.groupId, event.memberUUID);
-    if (result) {
+    if (result.isRight) {
       add(UserEnteredGroupScreenEvent());
     } else {
       emitter(state.copyWith(status: GroupBlocStatus.idle));
@@ -114,7 +117,7 @@ class GroupBloc extends Bloc<GroupEvent, GroupState> {
       return;
     }
     var result = await _groupService.createGroup(event.groupName);
-    if (result != null) {
+    if (result.isRight) {
       add(UserEnteredGroupScreenEvent());
     } else {
       emitter(state.copyWith(status: GroupBlocStatus.idle));

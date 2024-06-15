@@ -38,10 +38,11 @@ class CalendarBloc extends Bloc<CalendarEvent, CalendarState> {
     if (result.isLeft) {
       emitter(state.copyWith(
           status: CalendarStatus.idle, error: result.left.errorDetails));
+      return;
     }
 
     emitter(state.copyWith(
-        status: CalendarStatus.idle, tasks: result.right, group: group));
+        status: CalendarStatus.idle, tasks: result.right, group: group.right));
   }
 
   void _addTask(

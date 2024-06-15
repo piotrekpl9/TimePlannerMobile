@@ -10,28 +10,4 @@ abstract class TaskServiceAbstraction {
   Future<Either<ServiceError, Task>> createTaskForGroup(CreateTaskDto dto);
   Future<Either<ServiceError, Task>> updateTask(String uuid, UpdateTaskDto dto);
   Future<Either<ServiceError, bool>> deleteTask(String uuid);
-
-  Left<ServiceError, T> handleError<T>(RepositoryError error) {
-    switch (error.status) {
-      case RepositoryErrorStatus.connectionError:
-        return Left(ServiceError(
-            errorDetails: error.errorDetails,
-            status: ServiceErrorStatus.communicationError));
-
-      case RepositoryErrorStatus.requestError:
-        return Left(ServiceError(
-            errorDetails: error.errorDetails,
-            status: ServiceErrorStatus.communicationError));
-
-      case RepositoryErrorStatus.serverError:
-        return Left(ServiceError(
-            errorDetails: error.errorDetails,
-            status: ServiceErrorStatus.serverError));
-
-      case RepositoryErrorStatus.internalError:
-        return Left(ServiceError(
-            errorDetails: error.errorDetails,
-            status: ServiceErrorStatus.applicationError));
-    }
-  }
 }

@@ -1,4 +1,5 @@
 import 'package:either_dart/either.dart';
+import 'package:time_planner_mobile/application/service_base.dart';
 import 'package:time_planner_mobile/domain/common/service_error.dart';
 import 'package:time_planner_mobile/domain/task/model/create_task_dto.dart';
 import 'package:time_planner_mobile/domain/task/model/update_task_dto.dart';
@@ -7,7 +8,7 @@ import 'package:time_planner_mobile/domain/task/task_service_abstraction.dart';
 
 import '../domain/task/entity/task.dart';
 
-class TaskService extends TaskServiceAbstraction {
+class TaskService extends ServiceBase implements TaskServiceAbstraction {
   final TaskRepositoryAbstraction taskRepository;
 
   TaskService({required this.taskRepository});

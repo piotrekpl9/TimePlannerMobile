@@ -1,6 +1,6 @@
 part of 'group_bloc.dart';
 
-enum GroupBlocStatus { loading, init, idle }
+enum GroupBlocStatus { loading, init, idle, error }
 
 class GroupState extends Equatable {
   final Group? group;
