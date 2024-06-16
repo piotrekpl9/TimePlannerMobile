@@ -6,7 +6,8 @@ enum CalendarStatus {
   idle,
   creatingTask,
   updatingTask,
-  deletingTask
+  deletingTask,
+  error
 }
 
 class CalendarState extends Equatable {

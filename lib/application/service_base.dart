@@ -3,6 +3,14 @@ import 'package:time_planner_mobile/domain/common/repository_error.dart';
 import 'package:time_planner_mobile/domain/common/service_error.dart';
 
 class ServiceBase {
+  Either<ServiceError, T> handleGenericResponse<T>(
+      Either<RepositoryError, T> response) {
+    if (response.isLeft) {
+      return handleError(response.left);
+    }
+    return Right(response.right);
+  }
+
   Left<ServiceError, T> handleError<T>(RepositoryError error) {
     switch (error.status) {
       case RepositoryErrorStatus.connectionError:

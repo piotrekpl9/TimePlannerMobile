@@ -1,6 +1,7 @@
 import 'package:calendar_view/calendar_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:time_planner_mobile/domain/task/entity/task.dart';
 import 'package:time_planner_mobile/presentation/common/widgets/main_floating_action_button.dart';
@@ -59,6 +60,16 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                 );
               },
             ).toList());
+          }
+          if (state.status == CalendarStatus.error) {
+            Fluttertoast.showToast(
+                msg: state.error?.description ?? "Unknown error occured!",
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.BOTTOM,
+                timeInSecForIosWeb: 1,
+                backgroundColor: Colors.red,
+                textColor: Colors.white,
+                fontSize: 16.0);
           }
         },
         builder: (context, state) {

@@ -34,26 +34,35 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
   @override
   Widget build(BuildContext context) {
     var calendarBloc = context.read<CalendarBloc>();
-    return Container(
-      decoration: const BoxDecoration(
-        image: DecorationImage(
-            image: AssetImage("assets/background2.png"), fit: BoxFit.cover),
+    return MainScaffold(
+      appBar: AppBar(
+        systemOverlayStyle: const SystemUiOverlayStyle(
+            statusBarColor: Color.fromARGB(162, 0, 53, 94)),
+        centerTitle: true,
+        backgroundColor: Colors.transparent,
+        title: Text(
+          "Create Task",
+          style: TextStyle(color: AppColors.main),
+        ),
       ),
-      child: MainScaffold(
-        appBar: AppBar(
-          systemOverlayStyle: const SystemUiOverlayStyle(
-              statusBarColor: Color.fromARGB(162, 0, 53, 94)),
-          centerTitle: true,
-          backgroundColor: Colors.transparent,
-          title: Text(
-            "Create Task",
-            style: TextStyle(color: AppColors.main),
-          ),
-        ),
-        bottomNavigationBar: const MainBottomNavigationBar(
-          activeScreen: BottomNavigationBarPage.schedule,
-        ),
-        body: SafeArea(
+      bottomNavigationBar: const MainBottomNavigationBar(
+        activeScreen: BottomNavigationBarPage.schedule,
+      ),
+      body: BlocListener<CalendarBloc, CalendarState>(
+        bloc: calendarBloc,
+        listener: (context, state) {
+          if (state.status == CalendarStatus.error) {
+            Fluttertoast.showToast(
+                msg: state.error?.description ?? "Unknown error occured!",
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.BOTTOM,
+                timeInSecForIosWeb: 1,
+                backgroundColor: Colors.red,
+                textColor: Colors.white,
+                fontSize: 16.0);
+          }
+        },
+        child: SafeArea(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 30),
             child: Container(

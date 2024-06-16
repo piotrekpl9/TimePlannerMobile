@@ -17,38 +17,30 @@ class TaskService extends ServiceBase implements TaskServiceAbstraction {
   Future<Either<ServiceError, Task>> createTaskForGroup(
       CreateTaskDto dto) async {
     var result = await taskRepository.createTaskForGroup(dto);
-    if (result.isLeft) {
-      return handleError(result.left);
-    }
-    return Right(result.right);
+
+    return handleGenericResponse<Task>(result);
   }
 
   @override
   Future<Either<ServiceError, Task>> createTaskForUser(
       CreateTaskDto dto) async {
     var result = await taskRepository.createTaskForUser(dto);
-    if (result.isLeft) {
-      return handleError(result.left);
-    }
-    return Right(result.right);
+
+    return handleGenericResponse<Task>(result);
   }
 
   @override
   Future<Either<ServiceError, bool>> deleteTask(String uuid) async {
     var result = await taskRepository.deleteTask(uuid);
-    if (result.isLeft) {
-      return handleError(result.left);
-    }
-    return Right(result.right);
+
+    return handleGenericResponse<bool>(result);
   }
 
   @override
   Future<Either<ServiceError, Task>> updateTask(
       String uuid, UpdateTaskDto dto) async {
     var result = await taskRepository.updateTask(uuid, dto);
-    if (result.isLeft) {
-      return handleError(result.left);
-    }
-    return Right(result.right);
+
+    return handleGenericResponse<Task>(result);
   }
 }

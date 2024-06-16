@@ -98,7 +98,7 @@ class CalendarBloc extends Bloc<CalendarEvent, CalendarState> {
       tasks.removeWhere((element) => element.taskUUID == event.taskUUID);
     } else {
       emitter(state.copyWith(
-          status: CalendarStatus.idle, error: result.left.errorDetails));
+          status: CalendarStatus.error, error: result.left.errorDetails));
     }
     emitter(state.copyWith(status: CalendarStatus.idle, tasks: tasks));
   }

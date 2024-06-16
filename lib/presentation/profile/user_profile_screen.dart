@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:time_planner_mobile/presentation/authentication/bloc/authentication_bloc.dart';
 import 'package:time_planner_mobile/presentation/common/app_colors.dart';
 import 'package:time_planner_mobile/presentation/common/widgets/generic_form_field.dart';
@@ -35,8 +36,20 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
       bottomNavigationBar: const MainBottomNavigationBar(
         activeScreen: BottomNavigationBarPage.user,
       ),
-      body: BlocBuilder<UserProfileBloc, UserProfileState>(
+      body: BlocConsumer<UserProfileBloc, UserProfileState>(
         bloc: context.read<UserProfileBloc>(),
+        listener: (context, state) {
+          if (state.status == UserProfileStatus.error) {
+            Fluttertoast.showToast(
+                msg: state.error?.description ?? "Unknown error occured!",
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.BOTTOM,
+                timeInSecForIosWeb: 1,
+                backgroundColor: Colors.red,
+                textColor: Colors.white,
+                fontSize: 16.0);
+          }
+        },
         builder: (context, state) {
           if (state.status == UserProfileStatus.idle) {
             final user = state.user;
