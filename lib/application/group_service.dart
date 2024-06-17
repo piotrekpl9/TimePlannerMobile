@@ -1,49 +1,74 @@
+import 'package:either_dart/either.dart';
+import 'package:time_planner_mobile/application/service_base.dart';
+import 'package:time_planner_mobile/domain/common/service_error.dart';
 import 'package:time_planner_mobile/domain/group/entity/group.dart';
 import 'package:time_planner_mobile/domain/group/group_repository_abstraction.dart';
 import 'package:time_planner_mobile/domain/group/group_service_abstraction.dart';
 
-class GroupService implements GroupServiceAbstraction {
+class GroupService extends ServiceBase implements GroupServiceAbstraction {
   final GroupRepositoryAbstraction groupRepository;
 
   GroupService({required this.groupRepository});
 
   @override
-  Future<bool> acceptInvitation(String invitationId) async {
-    return await groupRepository.acceptInvitation(invitationId);
+  Future<Either<ServiceError, bool>> acceptInvitation(
+      String invitationId) async {
+    var result = await groupRepository.acceptInvitation(invitationId);
+
+    return handleGenericResponse<bool>(result);
   }
 
   @override
-  Future<bool> cancelInvitation(String groupId, String invitationId) async {
-    return await groupRepository.cancelInvitation(groupId, invitationId);
+  Future<Either<ServiceError, bool>> cancelInvitation(
+      String groupId, String invitationId) async {
+    var result = await groupRepository.cancelInvitation(groupId, invitationId);
+
+    return handleGenericResponse<bool>(result);
   }
 
   @override
-  Future<Group?> createGroup(String groupName) async {
-    return await groupRepository.createGroup(groupName);
+  Future<Either<ServiceError, Group>> createGroup(String groupName) async {
+    var result = await groupRepository.createGroup(groupName);
+
+    return handleGenericResponse<Group>(result);
   }
 
   @override
-  Future<bool> deleteGroup(String groupId) async {
-    return await groupRepository.deleteGroup(groupId);
+  Future<Either<ServiceError, bool>> deleteGroup(String groupId) async {
+    var result = await groupRepository.deleteGroup(groupId);
+
+    return handleGenericResponse<bool>(result);
   }
 
   @override
-  Future<bool> deleteGroupMember(String groupId, String memberId) async {
-    return await groupRepository.deleteGroupMember(groupId, memberId);
+  Future<Either<ServiceError, bool>> deleteGroupMember(
+      String groupId, String memberId) async {
+    var result = await groupRepository.deleteGroupMember(groupId, memberId);
+
+    return handleGenericResponse<bool>(result);
   }
 
   @override
-  Future<bool> inviteUserByEmail(String groupId, String email) async {
-    return await groupRepository.inviteUserByEmail(groupId, email);
+  Future<Either<ServiceError, bool>> inviteUserByEmail(
+      String groupId, String email) async {
+    var result = await groupRepository.inviteUserByEmail(groupId, email);
+
+    return handleGenericResponse<bool>(result);
   }
 
   @override
-  Future<bool> leaveGroup(String groupId, String invitationId) async {
-    return await groupRepository.leaveGroup(groupId);
+  Future<Either<ServiceError, bool>> leaveGroup(
+      String groupId, String invitationId) async {
+    var result = await groupRepository.leaveGroup(groupId);
+
+    return handleGenericResponse<bool>(result);
   }
 
   @override
-  Future<bool> rejectInvitation(String invitationId) async {
-    return await groupRepository.rejectInvitation(invitationId);
+  Future<Either<ServiceError, bool>> rejectInvitation(
+      String invitationId) async {
+    var result = await groupRepository.rejectInvitation(invitationId);
+
+    return handleGenericResponse<bool>(result);
   }
 }

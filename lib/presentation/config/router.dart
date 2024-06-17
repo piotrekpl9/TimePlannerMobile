@@ -66,8 +66,6 @@ GoRouter setupRouter() {
             ),
             transitionsBuilder:
                 (context, animation, secondaryAnimation, child) {
-              // Change the opacity of the screen using a Curve based on the the animation's
-              // value
               return child;
             },
           );
@@ -89,8 +87,6 @@ GoRouter setupRouter() {
             ),
             transitionsBuilder:
                 (context, animation, secondaryAnimation, child) {
-              // Change the opacity of the screen using a Curve based on the the animation's
-              // value
               return child;
             },
           );
@@ -112,8 +108,6 @@ GoRouter setupRouter() {
             ),
             transitionsBuilder:
                 (context, animation, secondaryAnimation, child) {
-              // Change the opacity of the screen using a Curve based on the the animation's
-              // value
               return child;
             },
           );
@@ -134,8 +128,6 @@ GoRouter setupRouter() {
             ),
             transitionsBuilder:
                 (context, animation, secondaryAnimation, child) {
-              // Change the opacity of the screen using a Curve based on the the animation's
-              // value
               return child;
             },
           );

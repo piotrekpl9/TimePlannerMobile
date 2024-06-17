@@ -148,6 +148,7 @@ class _GroupViewState extends State<GroupView> {
                                             ),
                                             onPressed: () {
                                               showAdaptiveDialog(
+                                                barrierDismissible: true,
                                                 context: context,
                                                 builder: (ctx) {
                                                   return BlocProvider.value(

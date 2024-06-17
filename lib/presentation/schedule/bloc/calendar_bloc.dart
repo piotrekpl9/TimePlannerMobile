@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:time_planner_mobile/domain/common/generic_error_details.dart';
 import 'package:time_planner_mobile/domain/group/entity/group.dart';
 import 'package:time_planner_mobile/domain/group/group_repository_abstraction.dart';
 import 'package:time_planner_mobile/domain/task/model/create_task_dto.dart';
@@ -31,29 +32,39 @@ class CalendarBloc extends Bloc<CalendarEvent, CalendarState> {
   void _userEnteredScreen(
       UserEnteredScreenEvent event, Emitter<CalendarState> emitter) async {
     emitter(state.copyWith(status: CalendarStatus.loading));
-    var tasks = await taskRepository.getUserTasks();
+    var result = await taskRepository.getUserTasks();
     var group = await groupRepository.getGroup();
+
+    if (result.isLeft) {
+      emitter(state.copyWith(
+          status: CalendarStatus.idle, error: result.left.errorDetails));
+      return;
+    }
+
     emitter(state.copyWith(
-        status: CalendarStatus.idle, tasks: tasks, group: group));
+        status: CalendarStatus.idle, tasks: result.right, group: group.right));
   }
 
   void _addTask(
       AddTaskButtonTappedEvent event, Emitter<CalendarState> emitter) async {
     emitter(state.copyWith(status: CalendarStatus.creatingTask));
-    var task = event.groupTask
+    var result = event.groupTask
         ? await taskService.createTaskForGroup(event.createTaskDto)
         : await taskService.createTaskForUser(event.createTaskDto);
-    if (task != null) {
+    if (result.isRight) {
       add(UserEnteredScreenEvent());
+    } else {
+      emitter(state.copyWith(
+          status: CalendarStatus.idle, error: result.left.errorDetails));
     }
   }
 
   void _updateTask(
       UpdateTaskButtonTappedEvent event, Emitter<CalendarState> emitter) async {
     emitter(state.copyWith(status: CalendarStatus.updatingTask));
-    var task =
+    var result =
         await taskService.updateTask(event.taskUUID, event.updateTaskDto);
-    if (task != null) {
+    if (result.isRight) {
       var oldTask = state.tasks
           .where((element) => element.taskUUID == event.taskUUID)
           .firstOrNull;
@@ -64,14 +75,17 @@ class CalendarBloc extends Bloc<CalendarEvent, CalendarState> {
       var tasks = state.tasks;
       tasks.remove(oldTask);
       var newTask = oldTask.copyWith(
-          name: task.name,
-          notes: task.notes,
-          plannedEndHour: task.plannedEndHour,
-          plannedStartHour: task.plannedStartHour,
-          status: task.status);
+          name: result.right.name,
+          notes: result.right.notes,
+          plannedEndHour: result.right.plannedEndHour,
+          plannedStartHour: result.right.plannedStartHour,
+          status: result.right.status);
 
       tasks.add(newTask);
       emitter(state.copyWith(status: CalendarStatus.idle, tasks: tasks));
+    } else {
+      emitter(state.copyWith(
+          status: CalendarStatus.idle, error: result.left.errorDetails));
     }
   }
 
@@ -80,8 +94,11 @@ class CalendarBloc extends Bloc<CalendarEvent, CalendarState> {
     emitter(state.copyWith(status: CalendarStatus.deletingTask));
     var result = await taskRepository.deleteTask(event.taskUUID);
     var tasks = state.tasks;
-    if (result) {
+    if (result.isRight) {
       tasks.removeWhere((element) => element.taskUUID == event.taskUUID);
+    } else {
+      emitter(state.copyWith(
+          status: CalendarStatus.error, error: result.left.errorDetails));
     }
     emitter(state.copyWith(status: CalendarStatus.idle, tasks: tasks));
   }
