@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:either_dart/either.dart';
 import 'package:time_planner_mobile/domain/common/generic_error_details.dart';
 import 'package:time_planner_mobile/domain/common/repository_error.dart';
@@ -168,7 +169,7 @@ class GroupRepository implements GroupRepositoryAbstraction {
   }
 
   @override
-  Future<Either<RepositoryError, Group>> getGroup() async {
+  Future<Either<RepositoryError, Group?>> getGroup() async {
     try {
       var result = await httpClient.dio.get(
         "api/group",
@@ -186,6 +187,11 @@ class GroupRepository implements GroupRepositoryAbstraction {
       var group = Group.fromJson(result.data);
       return Right(group);
     } catch (e) {
+      if (e is DioException) {
+        if (e.response?.statusCode == 404) {
+          return const Right(null);
+        }
+      }
       return Left(RepositoryError(status: RepositoryErrorStatus.internalError));
     }
   }

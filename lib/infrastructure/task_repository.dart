@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:either_dart/either.dart';
 import 'package:time_planner_mobile/domain/common/generic_error_details.dart';
 import 'package:time_planner_mobile/domain/common/repository_error.dart';
@@ -95,7 +96,7 @@ class TaskRepository implements TaskRepositoryAbstraction {
   }
 
   @override
-  Future<Either<RepositoryError, Task>> getTask(String uuid) async {
+  Future<Either<RepositoryError, Task?>> getTask(String uuid) async {
     try {
       var result = await httpClient.dio.get(
         "api/task/group/$uuid",
@@ -112,6 +113,11 @@ class TaskRepository implements TaskRepositoryAbstraction {
 
       return Right(Task.fromJson(result.data));
     } catch (e) {
+      if (e is DioException) {
+        if (e.response?.statusCode == 404) {
+          return const Right(null);
+        }
+      }
       return Left(RepositoryError(status: RepositoryErrorStatus.internalError));
     }
   }

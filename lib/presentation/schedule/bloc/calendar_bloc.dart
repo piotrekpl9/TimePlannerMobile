@@ -35,7 +35,7 @@ class CalendarBloc extends Bloc<CalendarEvent, CalendarState> {
     var result = await taskRepository.getUserTasks();
     var group = await groupRepository.getGroup();
 
-    if (result.isLeft) {
+    if (result.isLeft || group.isLeft) {
       emitter(state.copyWith(
           status: CalendarStatus.idle, error: result.left.errorDetails));
       return;

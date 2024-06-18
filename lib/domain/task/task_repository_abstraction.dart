@@ -10,7 +10,7 @@ abstract class TaskRepositoryAbstraction {
   Future<Either<RepositoryError, Task>> updateTask(
       String uuid, UpdateTaskDto dto);
 
-  Future<Either<RepositoryError, Task>> getTask(String uuid);
+  Future<Either<RepositoryError, Task?>> getTask(String uuid);
   Future<Either<RepositoryError, List<Task>>> getUserTasks();
   Future<Either<RepositoryError, List<Task>>> getGroupTasks(String uuid);
 
