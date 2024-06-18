@@ -14,7 +14,7 @@ abstract class GroupRepositoryAbstraction {
       String groupId, String invitationId);
   Future<Either<RepositoryError, bool>> leaveGroup(String groupId);
 
-  Future<Either<RepositoryError, Group>> getGroup();
+  Future<Either<RepositoryError, Group?>> getGroup();
   Future<Either<RepositoryError, List<Invitation>>> getPendingInvitation();
   Future<Either<RepositoryError, List<Invitation>>> getGroupInvitations();
   Future<Either<RepositoryError, List<Member>>> getGroupMembers();
