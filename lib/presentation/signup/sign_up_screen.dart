@@ -56,7 +56,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Spacer(
+                const Spacer(
                   flex: 2,
                 ),
                 Text(
@@ -129,7 +129,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ],
                   ),
                 ),
-                Spacer(),
+                const Spacer(),
                 MainButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
@@ -146,7 +146,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     style: TextStyle(color: AppColors.secondary),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 40,
                 )
               ],

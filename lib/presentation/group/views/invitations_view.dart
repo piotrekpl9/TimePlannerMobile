@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:time_planner_mobile/presentation/common/app_colors.dart';
-import 'package:time_planner_mobile/presentation/common/widgets/main_button.dart';
 import 'package:time_planner_mobile/presentation/group/bloc/group_bloc.dart';
 import 'package:time_planner_mobile/presentation/group/widget/invitation_row.dart';
 

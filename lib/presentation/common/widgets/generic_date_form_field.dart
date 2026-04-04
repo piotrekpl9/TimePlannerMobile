@@ -38,7 +38,7 @@ class GenericDateFormField extends StatelessWidget {
           contentPadding: const EdgeInsets.all(15),
           disabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
-              borderSide: BorderSide(
+              borderSide: const BorderSide(
                   color: Color.fromARGB(255, 164, 155, 135), width: 3)),
           enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),

@@ -65,7 +65,7 @@ class _TaskDetailsDialogState extends State<TaskDetailsDialog> {
                 Icons.edit_note,
                 color: AppColors.main,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               GenericFormField(
@@ -79,7 +79,7 @@ class _TaskDetailsDialogState extends State<TaskDetailsDialog> {
                   return null;
                 },
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               GenericFormField(
@@ -93,7 +93,7 @@ class _TaskDetailsDialogState extends State<TaskDetailsDialog> {
                   return null;
                 },
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               GenericDateFormField(
@@ -135,7 +135,7 @@ class _TaskDetailsDialogState extends State<TaskDetailsDialog> {
                   return null;
                 },
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               GenericDateFormField(
@@ -195,7 +195,7 @@ class _TaskDetailsDialogState extends State<TaskDetailsDialog> {
                   return null;
                 },
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               DropdownButtonFormField(
@@ -222,7 +222,7 @@ class _TaskDetailsDialogState extends State<TaskDetailsDialog> {
                           borderRadius: BorderRadius.circular(10),
                           borderSide:
                               BorderSide(color: AppColors.main, width: 3))),
-                  value: _currentTaskStatus,
+                  initialValue: _currentTaskStatus,
                   dropdownColor: AppColors.secondary,
                   isExpanded: true,
                   items: TaskStatus.values
@@ -241,7 +241,7 @@ class _TaskDetailsDialogState extends State<TaskDetailsDialog> {
                           });
                         }
                       : null),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               edit

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:time_planner_mobile/presentation/common/app_colors.dart';
 
 class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Widget? title;

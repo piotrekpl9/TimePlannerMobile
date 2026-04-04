@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:time_planner_mobile/presentation/common/app_colors.dart';
 
 class StartScaffold extends StatelessWidget {
   final Widget child;

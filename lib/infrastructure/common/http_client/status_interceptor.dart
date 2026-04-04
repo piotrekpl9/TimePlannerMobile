@@ -15,7 +15,7 @@ class StatusInterceptor extends Interceptor {
   }
 
   @override
-  void onError(DioError err, ErrorInterceptorHandler handler) async {
+  void onError(DioException err, ErrorInterceptorHandler handler) async {
     // Check if the error is due to specific status codes
     if (err.response != null &&
         (err.response?.statusCode == 401 || err.response?.statusCode == 400)) {

@@ -20,7 +20,7 @@ class TokenInterceptor extends Interceptor {
           //TODO add logger
           return super.onRequest(options, handler);
         }
-      } on Exception catch (e) {
+      } on Exception {
         //TODO add logger
         return super.onRequest(options, handler);
       }

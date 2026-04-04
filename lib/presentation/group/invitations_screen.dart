@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:go_router/go_router.dart';
 import 'package:time_planner_mobile/presentation/common/app_colors.dart';
 import 'package:time_planner_mobile/presentation/common/widgets/scaffold/bottom_navigation_bar/main_bottom_navigation_bar.dart';
 import 'package:time_planner_mobile/presentation/common/widgets/scaffold/bottom_navigation_bar/navigation_bar_page.dart';
@@ -10,8 +8,6 @@ import 'package:time_planner_mobile/presentation/common/widgets/scaffold/main_ap
 import 'package:time_planner_mobile/presentation/common/widgets/scaffold/main_scaffold.dart';
 import 'package:time_planner_mobile/presentation/group/bloc/group_bloc.dart';
 import 'package:time_planner_mobile/presentation/group/views/invitations_view.dart';
-import 'package:time_planner_mobile/presentation/profile/user_profile_screen.dart';
-import 'package:time_planner_mobile/presentation/schedule/schedule_screen.dart';
 
 class InvitationsScreen extends StatefulWidget {
   static String path = "/invitations";

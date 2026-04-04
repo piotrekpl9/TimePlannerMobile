@@ -1,5 +1,4 @@
 import 'package:either_dart/either.dart';
-import 'package:time_planner_mobile/domain/common/repository_error.dart';
 import 'package:time_planner_mobile/domain/common/service_error.dart';
 import 'package:time_planner_mobile/domain/task/entity/task.dart';
 import 'package:time_planner_mobile/domain/task/model/create_task_dto.dart';
