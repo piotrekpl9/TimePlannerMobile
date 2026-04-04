@@ -17,8 +17,6 @@ enum TaskStatus {
         return 'On Hold';
       case TaskStatus.cancelled:
         return 'Cancelled';
-      default:
-        return 'Unknown';
     }
   }
 
@@ -35,8 +33,6 @@ enum TaskStatus {
         return 'OnHold';
       case TaskStatus.cancelled:
         return 'Cancelled';
-      default:
-        return 'Unknown';
     }
   }
 

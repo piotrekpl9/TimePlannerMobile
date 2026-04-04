@@ -155,6 +155,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                               if (result.day != _endDate!.day ||
                                   result.year != _endDate!.year ||
                                   result.month != _endDate!.month) {
+                                if (!context.mounted) return;
                                 ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(
                                         content: Text(
