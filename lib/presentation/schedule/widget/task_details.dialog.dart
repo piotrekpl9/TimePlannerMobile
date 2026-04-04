@@ -222,7 +222,7 @@ class _TaskDetailsDialogState extends State<TaskDetailsDialog> {
                           borderRadius: BorderRadius.circular(10),
                           borderSide:
                               BorderSide(color: AppColors.main, width: 3))),
-                  initialValue: _currentTaskStatus,
+                  value: _currentTaskStatus,
                   dropdownColor: AppColors.secondary,
                   isExpanded: true,
                   items: TaskStatus.values
