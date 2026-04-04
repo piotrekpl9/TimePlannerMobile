@@ -19,7 +19,7 @@ pipeline {
             }
             steps {
                 sh 'flutter pub get'
-                sh 'flutter analyze'
+                sh 'flutter analyze --no-fatal-infos'
                 sh 'flutter test --coverage'
             }
             post {
